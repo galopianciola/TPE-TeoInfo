@@ -58,7 +58,7 @@ public class Ej1 {
 
         //imprimo la lista de la busqueda, ahora ordenada
         for (int i = 0; i < 5; i++) {
-            System.out.println(listaWillBusqueda.get(i).getNombreImagen() + ": " + this.listaWillBusqueda.get(i).getFactorCorrelacionCruzada());
+            System.out.println(this.listaWillBusqueda.get(i).getNombreImagen() + ": " + this.listaWillBusqueda.get(i).getFactorCorrelacionCruzada());
         }
     }
 

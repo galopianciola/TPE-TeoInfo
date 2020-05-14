@@ -25,17 +25,22 @@ public class Ej2 {
         try{
             //cargo la original
             this.imagenOriginal = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will(Original).bmp")), "Imagen original");
-            System.out.println(this.imagenOriginal.getNombreImagen());
 
-            //la mas parecida ya esta cargada
-            System.out.println(this.imagenMasParecida.getNombreImagen());
+            //la mas parecida ya esta cargada pq vino en el constructor
 
             this.imagenPolicia = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will_ej2.bmp")), "Imagen policia");
-            System.out.println(this.imagenPolicia.getNombreImagen());
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+
+        System.out.println("\n---------------------");
+        System.out.println("Ejercicio 2\n");
+
+        MediaDesvio calculador = new MediaDesvio();
+        System.out.println("Media de " + this.imagenOriginal.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenOriginal.getImagen()));
+        System.out.println("Media de " + this.imagenMasParecida.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenMasParecida.getImagen()));
+        System.out.println("Media de " + this.imagenPolicia.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenPolicia.getImagen()));
     }
 
 }
