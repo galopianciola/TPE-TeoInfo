@@ -24,13 +24,13 @@ public class Ej2 {
 
         try{
             //cargo la original
-            this.imagenOriginal = new ImagenWill(ImageIO.read(new File("/Users/macbook/Pictures/ImagenesWill/Will(Original).bmp")), "Imagen original");
+            this.imagenOriginal = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will(Original).bmp")), "Imagen original");
             System.out.println(this.imagenOriginal.getNombreImagen());
 
             //la mas parecida ya esta cargada
             System.out.println(this.imagenMasParecida.getNombreImagen());
 
-            this.imagenPolicia = new ImagenWill(ImageIO.read(new File("/Users/macbook/Pictures/ImagenesWill/Will_ej2.bmp")), "Imagen policia");
+            this.imagenPolicia = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will_ej2.bmp")), "Imagen policia");
             System.out.println(this.imagenPolicia.getNombreImagen());
 
         } catch (IOException e) {

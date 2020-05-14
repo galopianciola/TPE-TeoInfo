@@ -16,7 +16,7 @@ public class Ej1 {
     public void ejecutar(){
         try {
             //leo la imagen de will original
-            BufferedImage willOriginal = ImageIO.read(new File("/Users/macbook/Pictures/ImagenesWill/Will(Original).bmp"));
+            BufferedImage willOriginal = ImageIO.read(new File("ImagenesWill/Will(Original).bmp"));
 
             //genero una lista con las 5 imagenes de will que resultaron de la busqueda
             //y otra con informacion de las imagenes (nombre y factor), que luego sera la que ordenare
@@ -26,7 +26,7 @@ public class Ej1 {
             FactorCorrelacionCruzada calculador = new FactorCorrelacionCruzada();
 
             for (int i = 1; i <= 5; i++) {
-                BufferedImage will = ImageIO.read(new File("/Users/macbook/Pictures/ImagenesWill/Will_" + i + ".bmp"));
+                BufferedImage will = ImageIO.read(new File("ImagenesWill/Will_" + i + ".bmp"));
 
                 //se agregara en los indices de 0 a 4
                 this.listaWillBusqueda.add(new ImagenWill(will,"Imagen " + i));
