@@ -2,10 +2,9 @@ package ejercicio2;
 
 import common.ImagenWill;
 import ejercicio1.Ej1;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,9 +32,17 @@ public class Ej2 {
             this.imagenPolicia = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will_ej2.bmp")), "Imagen policia");
             System.out.println(this.imagenPolicia.getNombreImagen());
 
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        MediaDesvio md=new MediaDesvio();
+        System.out.println(md.calcularMedia(imagenOriginal.getImagen()));
+        Histograma h = new Histograma("Histograma",imagenOriginal.getImagen());
+        h.pack();
+        h.setVisible(true);
+
+
     }
 
 }
