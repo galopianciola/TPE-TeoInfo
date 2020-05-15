@@ -41,7 +41,7 @@ public class Ej1 {
         Comparator comparadorPorFactor = new Comparator<ImagenWill>(){
             @Override
             public int compare(ImagenWill o1, ImagenWill o2) {
-                //uso clase Wrapper de Float para poder usar el metodo compareTo
+                //uso clase Wrapper de Double para poder usar el metodo compareTo
                 return new Float(o2.getFactorCorrelacionCruzada()).compareTo(o1.getFactorCorrelacionCruzada());
             }
         };

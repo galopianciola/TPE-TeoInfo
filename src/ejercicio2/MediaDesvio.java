@@ -12,12 +12,25 @@ public class MediaDesvio {
             }
         }
 
-        float media = (float) sumatoria / (img.getWidth() * img.getHeight());
+        int n = img.getWidth() * img.getHeight(); //cant total de pixeles en la imagen
 
-        return media;
+        return (float) sumatoria / n;
     }
 
     public float calcularDesvio(BufferedImage img){
-        return 0;
+        float sumatoria = 0; //aca ire sumando el (valor de cada pixel) al cuadrado
+
+        for (int i = 0; i < img.getWidth(); i++){
+            for (int j = 0; j < img.getHeight(); j++){
+                sumatoria += (float) Math.pow(img.getRGB(i,j), 2);
+            }
+        }
+
+        int n = img.getWidth() * img.getHeight(); //cant total de pixeles en la imagen
+
+        float media_x_cuadrado = sumatoria / n;
+        float mediaAlCuadrado = (float) Math.pow(this.calcularMedia(img), 2);
+
+        return (float) Math.sqrt(media_x_cuadrado - mediaAlCuadrado);
     }
 }

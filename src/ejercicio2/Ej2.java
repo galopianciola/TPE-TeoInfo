@@ -41,6 +41,10 @@ public class Ej2 {
         System.out.println("Media de " + this.imagenOriginal.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenOriginal.getImagen()));
         System.out.println("Media de " + this.imagenMasParecida.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenMasParecida.getImagen()));
         System.out.println("Media de " + this.imagenPolicia.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenPolicia.getImagen()));
+
+        System.out.println("\nDesvio estandar de " + this.imagenOriginal.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenOriginal.getImagen()));
+        System.out.println("Desvio estandar " + this.imagenMasParecida.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenMasParecida.getImagen()));
+        System.out.println("Desvio estandar " + this.imagenPolicia.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenPolicia.getImagen()));
     }
 
 }

@@ -39,11 +39,11 @@ public class FactorCorrelacionCruzada {
         //ahora que tengo todos los datos que necesito,
         //uso la formula de Factor de Correlacion Cruzada
 
-        float correlacionCruzada = (float) n * sumatoriaXY;
-        float covarianzaCruzada = (float) correlacionCruzada - sumatoriaX * sumatoriaY;
-        float desvioEstandarX = (float) Math.sqrt(n * sumatoriaXcuadrado - Math.pow(sumatoriaX, 2));
-        float desvioEstandarY = (float) Math.sqrt(n * sumatoriaYcuadrado - Math.pow(sumatoriaY, 2));
+        float correlacionCruzada = (float) sumatoriaXY / n;
+        float covarianzaCruzada = correlacionCruzada - (sumatoriaX / n) * (sumatoriaY / n);
+        float desvioEstandarX = (float) Math.sqrt(sumatoriaXcuadrado / n - Math.pow(sumatoriaX / n, 2));
+        float desvioEstandarY = (float) Math.sqrt(sumatoriaYcuadrado / n - Math.pow(sumatoriaY / n, 2));
 
-        return (float) covarianzaCruzada / (desvioEstandarX * desvioEstandarY);
+        return covarianzaCruzada / (desvioEstandarX * desvioEstandarY);
     }
 }
