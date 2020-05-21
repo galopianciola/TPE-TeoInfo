@@ -38,9 +38,10 @@ public class Ej2 {
         }
         MediaDesvio md=new MediaDesvio();
         System.out.println(md.calcularMedia(imagenOriginal.getImagen()));
+        System.out.println(md.calcularDesvio(imagenOriginal.getImagen()));
         Histograma h = new Histograma("Histograma",imagenOriginal.getImagen());
-        h.pack();
-        h.setVisible(true);
+       // h.pack();
+        //h.setVisible(true);
 
 
     }
