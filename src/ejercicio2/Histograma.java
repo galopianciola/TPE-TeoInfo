@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 
 
 import common.ImagenWill;
@@ -15,7 +17,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.SimpleHistogramBin;
+import org.jfree.data.statistics.SimpleHistogramDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.ui.ApplicationFrame;
 
@@ -31,21 +36,25 @@ public class Histograma extends ApplicationFrame {
 		setContentPane(chartPanel);
 	}
 
-	private static IntervalXYDataset crearDataset(BufferedImage img) {
-		double[] arregloDistribucion = new double[img.getHeight()*img.getWidth()];
-		HistogramDataset dataset = new HistogramDataset();
-
+	private static DefaultCategoryDataset crearDataset(BufferedImage img) {
+		double[] arregloDistribucion = new double[CANTCOLOR];
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 0; i < img.getWidth(); i++) { // recorro ancho de la imagen que le paso por parametro
 			for (int j = 0; j < img.getHeight(); j++) { // recorro alto
 				Color simbolo= new Color(img.getRGB(i,j));
 				arregloDistribucion[simbolo.getRed()]++; //guardo los valores de imagen en el arreglo
 			}
 		}
-		dataset.addSeries( "Gamma de grises",arregloDistribucion,16);
+		for (int i=0;i<arregloDistribucion.length;i++) {
+			if (arregloDistribucion[i]!=0){
+				dataset.addValue(arregloDistribucion[i],"numero de repeticiones",""+(Math.floor(i/16)));
+			}
+
+		}
 		return dataset;
 	}
-	private static JFreeChart crearChart(IntervalXYDataset dataset) {
-		JFreeChart chart = ChartFactory.createHistogram(
+	private static JFreeChart crearChart(DefaultCategoryDataset dataset) {
+		JFreeChart chart = ChartFactory.createBarChart(
 				"Histograma",
 				null,
 				null,
@@ -55,9 +64,7 @@ public class Histograma extends ApplicationFrame {
 				true,
 				false
 		);
-		XYPlot plot = (XYPlot) chart.getPlot();
-		XYBarRenderer renderer = (XYBarRenderer) plot.getRenderer();
-		renderer.setDrawBarOutline(false);
+
 		try{
 			ChartUtilities.saveChartAsJPEG(new File("C:\\histograma.jpg"), chart, 500, 475);
 		}
