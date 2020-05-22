@@ -2,10 +2,9 @@ package ejercicio2;
 
 import common.ImagenWill;
 import ejercicio1.Ej1;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -30,9 +29,20 @@ public class Ej2 {
 
             this.imagenPolicia = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will_ej2.bmp")), "Imagen policia");
 
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+<<<<<<< HEAD
+        MediaDesvio md=new MediaDesvio();
+        System.out.println(md.calcularMedia(imagenOriginal.getImagen()));
+        System.out.println(md.calcularDesvio(imagenOriginal.getImagen()));
+        Histograma h = new Histograma("Histograma",imagenOriginal.getImagen());
+        h.pack();
+        h.setVisible(true);
+
+
+=======
 
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 2\n");
@@ -45,6 +55,7 @@ public class Ej2 {
         System.out.println("\nDesvio estandar de " + this.imagenOriginal.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenOriginal.getImagen()));
         System.out.println("Desvio estandar " + this.imagenMasParecida.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenMasParecida.getImagen()));
         System.out.println("Desvio estandar " + this.imagenPolicia.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenPolicia.getImagen()));
+>>>>>>> master
     }
 
 }

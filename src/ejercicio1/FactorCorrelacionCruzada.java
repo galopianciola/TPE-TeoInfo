@@ -1,5 +1,6 @@
 package ejercicio1;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class FactorCorrelacionCruzada {
@@ -21,9 +22,10 @@ public class FactorCorrelacionCruzada {
 
         for (int i =  0; i < imgX.getWidth(); i++) { //recorro ancho
             for (int j = 0; j < imgX.getHeight(); j++) { //recorro alto
-
-                float x = (float) imgX.getRGB(i, j); //obtengo el valor del pixel (i,j) en la img original
-                float y = (float) imgY.getRGB(i, j); //obtengo el valor del pixel (i,j) en la img analizada
+                Color valorX=new Color(imgX.getRGB(i, j));
+                Color valorY=new Color(imgY.getRGB(i, j));
+                float x = (float) valorX.getRed(); //obtengo el valor del pixel (i,j) en la img original
+                float y = (float) valorY.getRed(); //obtengo el valor del pixel (i,j) en la img analizada
                 //float x = 1;
                 //float y = 1;
 
