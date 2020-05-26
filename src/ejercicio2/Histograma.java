@@ -29,7 +29,7 @@ import javax.swing.*;
 public class Histograma extends ApplicationFrame {
 	public static int CANTCOLOR=256;
 
-	public Histograma(String title,BufferedImage img) {
+	public Histograma(String title,ImagenWill img) {
 		super(title);
 		JPanel chartPanel = crearPanel(img);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 475));
@@ -47,13 +47,13 @@ public class Histograma extends ApplicationFrame {
 		}
 		for (int i=0;i<arregloDistribucion.length;i++) {
 			if (arregloDistribucion[i]!=0){
-				dataset.addValue(arregloDistribucion[i],"numero de repeticiones",""+(Math.floor(i/16)));
+				dataset.addValue(arregloDistribucion[i],"numero de repeticiones",""+(int)(Math.floor(i/16)));
 			}
 
 		}
 		return dataset;
 	}
-	private static JFreeChart crearChart(DefaultCategoryDataset dataset) {
+	private static JFreeChart crearChart(DefaultCategoryDataset dataset,String nombre) {
 		JFreeChart chart = ChartFactory.createBarChart(
 				"Histograma",
 				null,
@@ -66,7 +66,7 @@ public class Histograma extends ApplicationFrame {
 		);
 
 		try{
-			ChartUtilities.saveChartAsJPEG(new File("C:\\histograma.jpg"), chart, 500, 475);
+			ChartUtilities.saveChartAsJPEG(new File("histograma de "+nombre+".jpg"), chart, 500, 475);
 		}
 		catch(IOException e){
 			System.out.println("Error al abrir el archivo");
@@ -74,8 +74,8 @@ public class Histograma extends ApplicationFrame {
 		return chart;
 	}
 
-	public static JPanel crearPanel(BufferedImage img) {
-		JFreeChart chart = crearChart(crearDataset(img));
+	public static JPanel crearPanel(ImagenWill img) {
+		JFreeChart chart = crearChart(crearDataset(img.getImagen()),img.getNombreImagen());
 		return new ChartPanel(chart);
 	}
 

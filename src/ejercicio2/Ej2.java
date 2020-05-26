@@ -33,16 +33,16 @@ public class Ej2 {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-<<<<<<< HEAD
-        MediaDesvio md=new MediaDesvio();
-        System.out.println(md.calcularMedia(imagenOriginal.getImagen()));
-        System.out.println(md.calcularDesvio(imagenOriginal.getImagen()));
-        Histograma h = new Histograma("Histograma",imagenOriginal.getImagen());
-        h.pack();
-        h.setVisible(true);
 
 
-=======
+        Histograma hImagenOriginal = new Histograma("Histograma imagen original",imagenOriginal);
+        Histograma hImagenMasParecida=new Histograma("Histograma imagen mas parecida",imagenMasParecida);
+        Histograma hImagenPolicia=new Histograma("Histograma imagen del policia",imagenPolicia);
+        //h.pack();
+        //h.setVisible(true);
+
+
+
 
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 2\n");
@@ -55,7 +55,7 @@ public class Ej2 {
         System.out.println("\nDesvio estandar de " + this.imagenOriginal.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenOriginal.getImagen()));
         System.out.println("Desvio estandar " + this.imagenMasParecida.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenMasParecida.getImagen()));
         System.out.println("Desvio estandar " + this.imagenPolicia.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenPolicia.getImagen()));
->>>>>>> master
+
     }
 
 }
