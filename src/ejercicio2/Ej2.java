@@ -1,38 +1,12 @@
 package ejercicio2;
 
 import common.ImagenWill;
-import ejercicio1.Ej1;
-import org.jfree.ui.RefineryUtilities;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 
 public class Ej2 {
-    private ImagenWill imagenOriginal;
-    private ImagenWill imagenMasParecida;
-    private ImagenWill imagenPolicia;
 
-    public Ej2(ImagenWill imagenMasParecida) {
-        //obtengo la imagen mas parecida arrojada por la busqueda del ej1
-        this.imagenMasParecida = imagenMasParecida;
-    }
+    public void ejecutar(ImagenWill imagenOriginal,ImagenWill imagenPolicia,ImagenWill imagenMasParecida){
 
-    public void ejecutar(){
-        //primero cargo las imagenes
-
-        try{
-            //cargo la original
-            this.imagenOriginal = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will(Original).bmp")), "Imagen original");
-
-            //la mas parecida ya esta cargada pq vino en el constructor
-
-            this.imagenPolicia = new ImagenWill(ImageIO.read(new File("ImagenesWill/Will_ej2.bmp")), "Imagen policia");
-
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
 
 
         Histograma hImagenOriginal = new Histograma("Histograma imagen original",imagenOriginal);
@@ -40,21 +14,19 @@ public class Ej2 {
         Histograma hImagenPolicia=new Histograma("Histograma imagen del policia",imagenPolicia);
         //h.pack();
         //h.setVisible(true);
-
-
-
+        //visualizacion del histograma
 
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 2\n");
 
         MediaDesvio calculador = new MediaDesvio();
-        System.out.println("Media de " + this.imagenOriginal.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenOriginal.getImagen()));
-        System.out.println("Media de " + this.imagenMasParecida.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenMasParecida.getImagen()));
-        System.out.println("Media de " + this.imagenPolicia.getNombreImagen() + ": " + calculador.calcularMedia(this.imagenPolicia.getImagen()));
+        System.out.println("Media de " + imagenOriginal.getNombreImagen() + ": " + calculador.calcularMedia(imagenOriginal.getImagen()));
+        System.out.println("Media de " + imagenMasParecida.getNombreImagen() + ": " + calculador.calcularMedia(imagenMasParecida.getImagen()));
+        System.out.println("Media de " + imagenPolicia.getNombreImagen() + ": " + calculador.calcularMedia(imagenPolicia.getImagen()));
 
-        System.out.println("\nDesvio estandar de " + this.imagenOriginal.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenOriginal.getImagen()));
-        System.out.println("Desvio estandar " + this.imagenMasParecida.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenMasParecida.getImagen()));
-        System.out.println("Desvio estandar " + this.imagenPolicia.getNombreImagen() + ": " + calculador.calcularDesvio(this.imagenPolicia.getImagen()));
+        System.out.println("\nDesvio estandar " + imagenOriginal.getNombreImagen() + ": " + calculador.calcularDesvio(imagenOriginal.getImagen()));
+        System.out.println("Desvio estandar " + imagenMasParecida.getNombreImagen() + ": " + calculador.calcularDesvio(imagenMasParecida.getImagen()));
+        System.out.println("Desvio estandar " + imagenPolicia.getNombreImagen() + ": " + calculador.calcularDesvio(imagenPolicia.getImagen()));
 
     }
 

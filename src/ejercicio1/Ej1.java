@@ -10,27 +10,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ej1 {
-    private ArrayList<ImagenWill> listaWillBusqueda; //aca tendre las 5 imagenes de will
     private ImagenWill imagenMasParecida;
 
-    public void ejecutar(){
+    public void ejecutar(BufferedImage willOriginal,ArrayList<ImagenWill>listaWillBusqueda){
+        //genero el calculador de factor de correlacion cruzada
+        FactorCorrelacionCruzada calculador = new FactorCorrelacionCruzada();
         try {
-            //leo la imagen de will original
-            BufferedImage willOriginal = ImageIO.read(new File("ImagenesWill/Will(Original).bmp"));
-
-            //genero una lista con las 5 imagenes de will que resultaron de la busqueda
-            //y otra con informacion de las imagenes (nombre y factor), que luego sera la que ordenare
-            this.listaWillBusqueda = new ArrayList<ImagenWill>();
-
-            //genero el calculador de factor de correlacion cruzada
-            FactorCorrelacionCruzada calculador = new FactorCorrelacionCruzada();
-
             for (int i = 1; i <= 5; i++) {
                 BufferedImage will = ImageIO.read(new File("ImagenesWill/Will_" + i + ".bmp"));
 
                 //se agregara en los indices de 0 a 4
-                this.listaWillBusqueda.add(new ImagenWill(will,"Imagen " + i));
-                this.listaWillBusqueda.get(i-1).setFactorCorrelacionCruzadaConOriginal(calculador.calcularFactorCorrelacionCruzada(willOriginal, will));
+                listaWillBusqueda.add(new ImagenWill(will,"Imagen " + i));
+                listaWillBusqueda.get(i-1).setFactorCorrelacionCruzadaConOriginal(calculador.calcularFactorCorrelacionCruzada(willOriginal, will));
             }
 
         } catch (IOException e) {
@@ -47,23 +38,22 @@ public class Ej1 {
         };
 
         //ordeno la lista de info imagenes, de mayor a menor por Factor
-        this.listaWillBusqueda.sort(comparadorPorFactor);
+        listaWillBusqueda.sort(comparadorPorFactor);
 
         //ahora que la lista esta ordenada, devuelvo el 1er elemento
         //como esta ordenada de mayor a menor, va a ser la mas parecida
         //se necesita para el ej2
-        this.imagenMasParecida = this.listaWillBusqueda.get(0);
+        this.imagenMasParecida = listaWillBusqueda.get(0);
 
         System.out.println("\nEjercicio 1 \n");
 
         //imprimo la lista de la busqueda, ahora ordenada
         for (int i = 0; i < 5; i++) {
-            System.out.println(this.listaWillBusqueda.get(i).getNombreImagen() + ": " + this.listaWillBusqueda.get(i).getFactorCorrelacionCruzada());
+            System.out.println(listaWillBusqueda.get(i).getNombreImagen() + ": " + listaWillBusqueda.get(i).getFactorCorrelacionCruzada());
         }
     }
 
     public ImagenWill getImagenMasParecida(){
-        //System.out.println(this.imagenMasParecida.getNombreImagen());
         return this.imagenMasParecida;
     }
 
