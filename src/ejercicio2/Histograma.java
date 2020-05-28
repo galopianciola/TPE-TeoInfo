@@ -36,23 +36,17 @@ public class Histograma extends ApplicationFrame {
 		setContentPane(chartPanel);
 	}
 
-	private static DefaultCategoryDataset crearDataset(BufferedImage img) {
-		double[] arregloDistribucion = new double[CANTCOLOR];
+	private static DefaultCategoryDataset crearDataset(ImagenWill img) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (int i = 0; i < img.getWidth(); i++) { // recorro ancho de la imagen que le paso por parametro
-			for (int j = 0; j < img.getHeight(); j++) { // recorro alto
-				Color simbolo= new Color(img.getRGB(i,j));
-				arregloDistribucion[simbolo.getRed()]++; //guardo los valores de imagen en el arreglo
-			}
-		}
-		for (int i=0;i<arregloDistribucion.length;i++) {
-			if (arregloDistribucion[i]!=0){
-				dataset.addValue(arregloDistribucion[i],"numero de repeticiones",""+(int)(Math.floor(i/16)));
+		for (int i=0;i<img.getArregloFrecuencia().length;i++) {
+			if (img.getArregloFrecuencia()[i]!=0){
+				dataset.addValue(img.getArregloFrecuencia()[i],"numero de repeticiones",""+(int)(Math.floor(i/16)));
 			}
 
 		}
 		return dataset;
 	}
+
 	private static JFreeChart crearChart(DefaultCategoryDataset dataset,String nombre) {
 		JFreeChart chart = ChartFactory.createBarChart(
 				"Histograma",
@@ -75,7 +69,7 @@ public class Histograma extends ApplicationFrame {
 	}
 
 	public static JPanel crearPanel(ImagenWill img) {
-		JFreeChart chart = crearChart(crearDataset(img.getImagen()),img.getNombreImagen());
+		JFreeChart chart = crearChart(crearDataset(img),img.getNombreImagen());
 		return new ChartPanel(chart);
 	}
 
