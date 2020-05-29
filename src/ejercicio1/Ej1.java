@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ej1 {
+    private ArrayList<ImagenWill> listaWillBusqueda = new ArrayList<>();
     private ImagenWill imagenMasParecida;
 
-    public void ejecutar(BufferedImage willOriginal,ArrayList<ImagenWill>listaWillBusqueda){
+    public void ejecutar(BufferedImage willOriginal){
         //genero el calculador de factor de correlacion cruzada
         FactorCorrelacionCruzada calculador = new FactorCorrelacionCruzada();
         try {

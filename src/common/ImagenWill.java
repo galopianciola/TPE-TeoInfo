@@ -60,7 +60,9 @@ public class ImagenWill {
             }
         }
     }
-    public double[] getArregloFrecuencia(){ return this.arregloFrecuencia; }
+    public double[] getArregloFrecuencia(){
+        return this.arregloFrecuencia;
+    }
 
     public int getCantPixeles(){return cantPixeles;}
 

@@ -7,9 +7,12 @@ public class Ej3 {
 
     public void ejecutar(ImagenWill imagenOriginal,ImagenWill imagenPolicia,ImagenWill imagenMasParecida) {
         Huffman h1=new Huffman();
-        for (int i=0;i<16;i++)
-            System.out.println(h1.getArregloProbabilidades(imagenOriginal)[i]);
 
+        System.out.println("\n---------------------");
+        System.out.println("Ejercicio 3 \n");
+
+        h1.generarCodigo(h1.calcularHuffman(imagenOriginal), "");
+        h1.imprimirCodigo();
     }
 
 }
