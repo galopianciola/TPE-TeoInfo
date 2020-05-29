@@ -37,7 +37,7 @@ public class Huffman {
         //en este metodo obtendre el arbol de codificacion, para luego codificar recorriendolo con 0s y 1s
 
         //ejecuto este metodo para obtener en la lista this.simbolos
-        //los 16 (o 256, despues vemos) pares simbolo - probabilidad
+        //los 16 objetos Nodo iniciales (pares simbolo - probabilidad)
         this.getArregloProbabilidades(imagenOriginal);
 
         //genero un comparador que luego me ayude a ordenar la lista de simbolo-probabilidad segun probabilidad
@@ -73,7 +73,8 @@ public class Huffman {
             //por ser intermedio, pongo el simbolo en null.
             //los hijos de este nodo seran los que sumé para formar su probabilidad.
             //aclaracion: que un nodo tenga simbolo -1 significa que es un intermedio
-            Nodo nuevo = new Nodo(-1, x.getProb()+y.getProb(), x, y);
+            //otra aclaracion: en la rama izquierda siempre va el nodo mayor (como en la hoja)
+            Nodo nuevo = new Nodo(-1, x.getProb()+y.getProb(), y, x);
 
             //el nodo nuevo sera la raiz del arbol de codificacion ahora
             raiz = nuevo;
@@ -96,10 +97,10 @@ public class Huffman {
             // *17 de ruta para retomar los valores de colores originales
             this.codigo.put(new Integer(arbol.getSimbolo() * 17), codigo);
         } else { //si no es hoja
-            //voy con recursion a izquierda, agregando 1 al codigo parcial
+            //voy con recursion a izquierda (pongo 1 a la izq pq ahi esta el mayor , agregando 0 al codigo parcial
             generarCodigo(arbol.getIzq(), codigo + "1");
 
-            //y voy con recursion a derecha, agregando 0 al codigo parcial
+            //y voy con recursion a derecha, agregando 0 al codigo parcial pq ahi esta el menor
             generarCodigo(arbol.getDer(), codigo + "0");
         }
     }
