@@ -84,10 +84,9 @@ public class Huffman {
 
         //si es un nodo hoja (osea, un simbolo a codificar)
         if ((arbol.getIzq() == null) && (arbol.getDer() == null)){
-            // *17 de ruta para retomar los valores de colores originales
             this.codigo.put(new Integer(arbol.getSimbolo()), codigo);
         } else { //si no es hoja
-            //voy con recursion a izquierda (pongo 1 a la izq pq ahi esta el mayor , agregando 0 al codigo parcial
+            //voy con recursion a izquierda (pongo 1 a la izq pq ahi esta el mayor), agregando 1 al codigo parcial
             generarCodigo(arbol.getIzq(), codigo + "1");
 
             //y voy con recursion a derecha, agregando 0 al codigo parcial pq ahi esta el menor
@@ -116,20 +115,34 @@ public class Huffman {
 
         //todo: aca debo pasarlo a Byte y agregarlo a result
         byte buffer = 0; //byte temporal que voy armando
-        int bufferLength = 8;
+        int bufferLength = 8; //size: byte
         int bufferPos = 0;
 
-        //para todos los elementos String de la lista code
-        for (String data: code){
+        for (String data: code){ //para todos los elementos String de la lista code
+            for (int i = 0; i < data.length(); i++) { //para cada caracter de ese String
+                char actual = data.charAt(i); //obtengo el char
 
-            //si se completo el byte temporal actual
-            if (bufferPos == bufferLength) {
+                // La operación de corrimiento pone un '0'
+                buffer = (byte) (buffer << 1);
+                bufferPos++;
 
+                //si era un 0 ya queda,
+                //y si era un 1 (osea que necesito cambiarlo)
+                if (actual == '1'){
+                    //al hacer OR con mascara 1 se va a volver 1 ese ultimo bit
+                    buffer = (byte) (buffer | 1);  // 0 0 0 0 0 0 0 1
+                }
+
+                //si se completo el byte temporal actual
+                if (bufferPos == bufferLength) {
+                    result.add(buffer); //lo agrego a la lista de bytes codificados
+                    buffer = 0; //y reinicio el buffer
+                    bufferPos = 0;
+                }
             }
-
         }
 
-        return null;
+        return result;
     }
 
     public void imprimirCodigo(){
