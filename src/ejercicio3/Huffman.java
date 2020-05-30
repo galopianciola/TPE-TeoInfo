@@ -107,10 +107,7 @@ public class Huffman {
 
                 //obtengo el codigo y lo agrego a la lista code de Strings
                 code.add(this.codigo.get(new Integer(valorPixel)));
-
-                break;
             }
-            break;
         }
 
         //todo: aca debo pasarlo a Byte y agregarlo a result
@@ -139,6 +136,18 @@ public class Huffman {
                     buffer = 0; //y reinicio el buffer
                     bufferPos = 0;
                 }
+
+                //si no se completa el byte temporal porque es el ultimo byte a llenar...
+                //no completo el byte, estoy en el ultimo caracter del string, y ademas no hay mas strings
+                if ((bufferPos != bufferLength) && (i == data.length()-1) && (code.indexOf(data)+1 == code.size())){
+                    //CUESTION DEL DECODIFICADOR BRO
+                    //porque siempre inicializo el buffer en 0
+                }
+
+
+                //esos bits que me faltan para llenar el byte, los represento con 0s que sean discernibles para el decoder.
+                //el decodificador va a recibir el tamanio del codigo a decodificar y dividirlo por 8.
+                //el resto de la division sera cuantos bits invalidos debera desconsiderar.
             }
         }
 
