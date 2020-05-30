@@ -1,13 +1,8 @@
 package ejercicio2;
 
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
-
 
 import common.ImagenWill;
 import org.jfree.chart.ChartFactory;
@@ -15,13 +10,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.SimpleHistogramBin;
-import org.jfree.data.statistics.SimpleHistogramDataset;
-import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.ui.ApplicationFrame;
 
 import javax.swing.*;

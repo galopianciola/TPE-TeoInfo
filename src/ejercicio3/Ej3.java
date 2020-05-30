@@ -13,6 +13,9 @@ public class Ej3 {
 
         h1.generarCodigo(h1.calcularHuffman(imagenOriginal), "");
         h1.imprimirCodigo();
+
+        System.out.println("\n -------");
+        h1.codificar(imagenOriginal);
     }
 
 }

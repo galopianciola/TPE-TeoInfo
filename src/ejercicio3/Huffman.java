@@ -2,6 +2,7 @@ package ejercicio3;
 
 import common.ImagenWill;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -14,21 +15,15 @@ public class Huffman {
     //aqui tendre la lista inicial de cada simbolo con su probabilidad
     private ArrayList<Nodo> simbolos = new ArrayList<>();
 
-    public void getArregloProbabilidades(ImagenWill imagen){
-        int inicio=0;
-        int pos=0;
-        double[] arreglo= new double[16];
+    public void getNodosIniciales(ImagenWill imagen){
 
-        while (inicio < 16) { // hasta llegar hasta la ultima posicion del arregloIntervalo
-            for (int x = 0; x < 16; x++) { //pasa los siguientes 16 valores del arregloDistribucion
-                arreglo[inicio] += imagen.getArregloFrecuencia()[pos]/imagen.getCantPixeles();
-                pos++;
+        for (int i = 0; i < imagen.getArregloFrecuencia().length; i++){
+            //solo voy a considerar los colores que aparecen mas de 0 veces
+            if (imagen.getArregloFrecuencia()[i] != 0){
+                //agrego a la lista el color, junto con su probabilidad de aparicion en la imagen
+                double probFrecuencia = imagen.getArregloFrecuencia()[i]/imagen.getCantPixeles();
+                this.simbolos.add(new Nodo(i, probFrecuencia, null, null));
             }
-
-            //agrego a la lista el color, junto con su probabilidad de aparicion en la imagen
-            this.simbolos.add(new Nodo(inicio, arreglo[inicio], null, null));
-
-            inicio ++;
         }
 
     }
@@ -36,9 +31,8 @@ public class Huffman {
     public Nodo calcularHuffman(ImagenWill imagenOriginal){
         //en este metodo obtendre el arbol de codificacion, para luego codificar recorriendolo con 0s y 1s
 
-        //ejecuto este metodo para obtener en la lista this.simbolos
-        //los 16 objetos Nodo iniciales (pares simbolo - probabilidad)
-        this.getArregloProbabilidades(imagenOriginal);
+        //ejecuto este metodo para obtener en la lista this.simbolos los objetos Nodo iniciales (pares simbolo - probabilidad)
+        this.getNodosIniciales(imagenOriginal);
 
         //genero un comparador que luego me ayude a ordenar la lista de simbolo-probabilidad segun probabilidad
         Comparator comparaProbabilidades = new Comparator<Nodo>(){
@@ -49,11 +43,7 @@ public class Huffman {
         };
 
         this.simbolos.sort(comparaProbabilidades);
-//        print
-//        for (int i = 0; i<16; i++) {
-//            System.out.println(this.simbolos.get(i).getProb());
-//            System.out.println(this.simbolos.get(i).getSimbolo());
-//        }
+
 
         //inicializo el arbol de codificacion con un nodo raiz
         Nodo raiz = null;
@@ -95,7 +85,7 @@ public class Huffman {
         //si es un nodo hoja (osea, un simbolo a codificar)
         if ((arbol.getIzq() == null) && (arbol.getDer() == null)){
             // *17 de ruta para retomar los valores de colores originales
-            this.codigo.put(new Integer(arbol.getSimbolo() * 17), codigo);
+            this.codigo.put(new Integer(arbol.getSimbolo()), codigo);
         } else { //si no es hoja
             //voy con recursion a izquierda (pongo 1 a la izq pq ahi esta el mayor , agregando 0 al codigo parcial
             generarCodigo(arbol.getIzq(), codigo + "1");
@@ -103,6 +93,43 @@ public class Huffman {
             //y voy con recursion a derecha, agregando 0 al codigo parcial pq ahi esta el menor
             generarCodigo(arbol.getDer(), codigo + "0");
         }
+    }
+
+    public ArrayList<Byte> codificar(ImagenWill imagen){
+        ArrayList<String> code = new ArrayList<>(); //a codificar
+        ArrayList<Byte> result = new ArrayList<>(); //resultado de codificacion
+
+
+        for (int i = 0; i < imagen.getImagen().getWidth(); i++) {
+            for (int j = 0; j < imagen.getImagen().getHeight(); j++) {
+                //primero obtengo el valor a codificar
+                Color colorPixel = new Color(imagen.getImagen().getRGB(i, j));
+                int valorPixel = colorPixel.getRed();
+
+                //obtengo el codigo y lo agrego a la lista code de Strings
+                code.add(this.codigo.get(new Integer(valorPixel)));
+
+                break;
+            }
+            break;
+        }
+
+        //todo: aca debo pasarlo a Byte y agregarlo a result
+        byte buffer = 0; //byte temporal que voy armando
+        int bufferLength = 8;
+        int bufferPos = 0;
+
+        //para todos los elementos String de la lista code
+        for (String data: code){
+
+            //si se completo el byte temporal actual
+            if (bufferPos == bufferLength) {
+
+            }
+
+        }
+
+        return null;
     }
 
     public void imprimirCodigo(){

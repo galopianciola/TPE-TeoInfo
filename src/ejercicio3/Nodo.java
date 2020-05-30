@@ -30,19 +30,4 @@ public class Nodo {
         return prob;
     }
 
-//    public void addValor(double valor){
-//        if(valor>this.prob) {
-//            if (this.der != null) {
-//                der.addValor(valor);
-//            } else {
-//                der = new Nodo(valor);
-//            }
-//        }else{
-//            if (this.izq!=null){
-//                izq.addValor(valor);
-//            }else{
-//                izq = new Nodo(valor);
-//            }
-//        }
-//    }
 }
