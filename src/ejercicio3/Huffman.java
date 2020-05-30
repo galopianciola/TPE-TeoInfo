@@ -3,6 +3,9 @@ package ejercicio3;
 import common.ImagenWill;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -14,25 +17,40 @@ public class Huffman {
     private Hashtable<Integer,String> codigo = new Hashtable<>();
     //aqui tendre la lista inicial de cada simbolo con su probabilidad
     private ArrayList<Nodo> simbolos = new ArrayList<>();
+    private static int LONGITUDBUFFER = 8;
 
-    public void getNodosIniciales(ImagenWill imagen){
 
-        for (int i = 0; i < imagen.getArregloFrecuencia().length; i++){
+    public double[] getProbabilidades(double[] frecuencias){
+        int sumatotal = 0;
+        for(int i=0;i <frecuencias.length;i++){
+            sumatotal += frecuencias[i];
+        }
+
+    }
+
+
+    public void getNodosIniciales(double[] arregloFrecuencias){
+            int sumatotal =0;
+            for(int i=0;i <arregloFrecuencias.length;i++){
+            sumatotal += arregloFrecuencias[i];
+            }
+
+            for (int i = 0; i < arregloFrecuencias.length; i++){
             //solo voy a considerar los colores que aparecen mas de 0 veces
-            if (imagen.getArregloFrecuencia()[i] != 0){
+            if (arregloFrecuencias[i] != 0){
                 //agrego a la lista el color, junto con su probabilidad de aparicion en la imagen
-                double probFrecuencia = imagen.getArregloFrecuencia()[i]/imagen.getCantPixeles();
+                double probFrecuencia = arregloFrecuencias[i]/sumatotal;
                 this.simbolos.add(new Nodo(i, probFrecuencia, null, null));
             }
         }
 
     }
 
-    public Nodo calcularHuffman(ImagenWill imagenOriginal){
+    public Nodo calcularHuffman(double[] frecuencias){
         //en este metodo obtendre el arbol de codificacion, para luego codificar recorriendolo con 0s y 1s
 
         //ejecuto este metodo para obtener en la lista this.simbolos los objetos Nodo iniciales (pares simbolo - probabilidad)
-        this.getNodosIniciales(imagenOriginal);
+        this.getNodosIniciales(frecuencias);
 
         //genero un comparador que luego me ayude a ordenar la lista de simbolo-probabilidad segun probabilidad
         Comparator comparaProbabilidades = new Comparator<Nodo>(){
@@ -94,22 +112,21 @@ public class Huffman {
         }
     }
 
-    public ArrayList<Byte> codificar(ImagenWill imagen){
+    public ArrayList<Byte> codificarEnLista(ImagenWill imagen){
         ArrayList<String> code = new ArrayList<>(); //a codificar
         ArrayList<Byte> result = new ArrayList<>(); //resultado de codificacion
-
+        int suma = 0;
 
         for (int i = 0; i < imagen.getImagen().getWidth(); i++) {
             for (int j = 0; j < imagen.getImagen().getHeight(); j++) {
                 //primero obtengo el valor a codificar
                 Color colorPixel = new Color(imagen.getImagen().getRGB(i, j));
                 int valorPixel = colorPixel.getRed();
-
-                //obtengo el codigo y lo agrego a la lista code de Strings
-                code.add(this.codigo.get(new Integer(valorPixel)));
+                suma =+ this.codigo.get(new Integer(valorPixel)).length(); //sumamos el tamanio de cada codigo de cada pixel
+                code.add(this.codigo.get(new Integer(valorPixel))); //obtengo el codigo y lo agrego a la lista code de String
             }
         }
-
+        imagen.setBitsCodificado(suma); //agregamos el tamanio calculado a la imagen
         //todo: aca debo pasarlo a Byte y agregarlo a result
         byte buffer = 0; //byte temporal que voy armando
         int bufferLength = 8; //size: byte
@@ -132,6 +149,8 @@ public class Huffman {
 
                 //si se completo el byte temporal actual
                 if (bufferPos == bufferLength) {
+                    //Byte aux = new Byte(buffer);
+                    //System.out.println(aux.toString());
                     result.add(buffer); //lo agrego a la lista de bytes codificados
                     buffer = 0; //y reinicio el buffer
                     bufferPos = 0;
@@ -140,6 +159,7 @@ public class Huffman {
                 //si no se completa el byte temporal porque es el ultimo byte a llenar...
                 //no completo el byte, estoy en el ultimo caracter del string, y ademas no hay mas strings
                 if ((bufferPos != bufferLength) && (i == data.length()-1) && (code.indexOf(data)+1 == code.size())){
+                    buffer = (byte) (buffer << (bufferLength- bufferPos)); // nos aseguramos que los 0s inservibles queden al final
                     //CUESTION DEL DECODIFICADOR BRO
                     //porque siempre inicializo el buffer en 0
                 }
@@ -153,6 +173,73 @@ public class Huffman {
 
         return result;
     }
+
+    private static byte[] convertirAPrimitivo(ArrayList<Byte> input) {
+        byte[] ret = new byte[input.size()];
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = input.get(i);
+        }
+
+        return ret;
+    }
+
+    public byte[] codificar (ImagenWill imagen){
+        ArrayList<Byte> lis = codificarEnLista(imagen);
+        return convertirAPrimitivo(lis);
+
+    }
+
+    public static char[] extraerArchivo(String inputFilepath, int cantBits) {
+        char[] restoredSequence = new char[cantBits];
+
+        try {
+            byte[] inputSequence = Files.readAllBytes(new File(inputFilepath).toPath());
+
+            int globalIndex = 0;
+            byte mask = (byte) (1 << (LONGITUDBUFFER - 1)); // mask: 10000000
+            int bufferPos = 0;
+
+            int i = 0; // indice en la lista de bytes (secuencia codificada)
+            while (globalIndex < cantBits)
+            {
+                byte buffer = inputSequence[i];
+                while (bufferPos < LONGITUDBUFFER) {
+
+                    if ((buffer & mask) == mask) {  // 10000000
+                        restoredSequence[globalIndex] = '1';
+                    } else {
+                        restoredSequence[globalIndex] = '0';
+                    }
+
+                    buffer = (byte) (buffer << 1);
+                    bufferPos++;
+                    globalIndex++;
+
+                    if (globalIndex == cantBits) {
+                        break;
+                    }
+                }
+
+                i++;
+                bufferPos = 0;
+            }
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        return restoredSequence;
+    }
+
+    public ImagenWill decodificar(String archivo, int cantBits, int ancho, int alto, double[] probabilidades){
+        char[] secuencia = extraerArchivo(archivo,cantBits);
+        if ((secuencia.length % 8) != 0){
+            int aDescartar = secuencia.length % 8;
+        }
+
+
+    }
+
 
     public void imprimirCodigo(){
         //obtengo todas las claves del hash

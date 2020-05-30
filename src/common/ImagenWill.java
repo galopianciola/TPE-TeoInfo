@@ -11,6 +11,7 @@ public class ImagenWill {
     private float desvio; //para ej2
     private double[] arregloFrecuencia = new double[256];
     private int cantPixeles;
+    private int bitsCodificado;
 
     public ImagenWill(BufferedImage imagen, String nombreImagen) {
         this.imagen = imagen;
@@ -34,6 +35,14 @@ public class ImagenWill {
 
     public void setFactorCorrelacionCruzadaConOriginal(float factorCorrelacionCruzadaConOriginal) {
         this.factorCorrelacionCruzadaConOriginal = factorCorrelacionCruzadaConOriginal;
+    }
+
+    public int getBitsCodificado() {
+        return bitsCodificado;
+    }
+
+    public void setBitsCodificado(int bitsCodificado) {
+        this.bitsCodificado = bitsCodificado;
     }
 
     public float getMedia() {

@@ -2,6 +2,11 @@ package ejercicio3;
 
 import common.ImagenWill;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+
 
 public class Ej3 {
 
@@ -15,7 +20,24 @@ public class Ej3 {
         h1.imprimirCodigo();
 
         System.out.println("\n -------");
-        h1.codificar(imagenOriginal);
+
+        try {
+            // Obtener bytes que contienen la secuencia original codificada
+            byte[] byteArray = h1.codificar(imagenOriginal);
+
+            // Guardar la codificación en un archivo binario
+            FileOutputStream fos = new FileOutputStream("output.bin");
+            fos.write(byteArray);
+            //fos.write (anchoimagen)
+            //fos.write(altoimagagen(
+            //fos.write(tamaño en bits)
+            fos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
