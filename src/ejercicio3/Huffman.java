@@ -21,30 +21,32 @@ public class Huffman {
 
 
     public double[] getProbabilidades(double[] frecuencias){
-        int sumatotal = 0;
+        int sumaTotal = 0;
         for(int i=0;i <frecuencias.length;i++){
-            sumatotal += frecuencias[i];
+            sumaTotal += frecuencias[i];
         }
 
+        double[] output = new double[256];
+
+        for (int i = 0; i < frecuencias.length; i++){
+            double probFrecuencia = frecuencias[i]/sumaTotal;
+            output[i] = probFrecuencia;
+        }
+
+        return output;
     }
 
 
     public void getNodosIniciales(double[] arregloFrecuencias){
-            int sumatotal =0;
-            for(int i=0;i <arregloFrecuencias.length;i++){
-            sumatotal += arregloFrecuencias[i];
-            }
-
-            for (int i = 0; i < arregloFrecuencias.length; i++){
+        for (int i = 0; i < getProbabilidades(arregloFrecuencias).length; i++){
             //solo voy a considerar los colores que aparecen mas de 0 veces
-            if (arregloFrecuencias[i] != 0){
+            if (getProbabilidades(arregloFrecuencias)[i] != 0){
                 //agrego a la lista el color, junto con su probabilidad de aparicion en la imagen
-                double probFrecuencia = arregloFrecuencias[i]/sumatotal;
-                this.simbolos.add(new Nodo(i, probFrecuencia, null, null));
+                this.simbolos.add(new Nodo(i, getProbabilidades(arregloFrecuencias)[i], null, null));
             }
         }
-
     }
+
 
     public Nodo calcularHuffman(double[] frecuencias){
         //en este metodo obtendre el arbol de codificacion, para luego codificar recorriendolo con 0s y 1s
@@ -237,7 +239,9 @@ public class Huffman {
             int aDescartar = secuencia.length % 8;
         }
 
-
+        //calculo Huffman (pasandole las probabilidades)
+        //llamo a generarCodigo para ir recorriendo el arbol y obtener el codigo (recibe el arbol obtenido y "")
+        //todo: como necesito otra hashtable propia del decodificador, SEPARAME TODO PERRI
     }
 
 
