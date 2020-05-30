@@ -11,17 +11,16 @@ import java.util.ArrayList;
 public class Ej3 {
 
     public void ejecutar(ImagenWill imagenOriginal,ImagenWill imagenPolicia,ImagenWill imagenMasParecida) {
-        Huffman h1=new Huffman();
 
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 3 \n");
-
-        h1.generarCodigo(h1.calcularHuffman(imagenOriginal), "");
-        h1.imprimirCodigo();
+        Codificador codifica=new Codificador();
+        codifica.codificar(imagenOriginal,imagenOriginal.getArregloFrecuencia());
+        //codifica.imprimirCodigo();
 
         System.out.println("\n -------");
 
-        try {
+       /* try {
             // Obtener bytes que contienen la secuencia original codificada
             byte[] byteArray = h1.codificar(imagenOriginal);
 
@@ -35,7 +34,7 @@ public class Ej3 {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
     }
