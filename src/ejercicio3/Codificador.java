@@ -3,6 +3,7 @@ package ejercicio3;
 import common.ImagenWill;
 
 import java.awt.*;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -96,11 +97,19 @@ public class Codificador {
         }
     }
 
-    public byte[] codificar (ImagenWill imagen,double[]arregloFrecuencia){
+    public byte[] codificarImagen (ImagenWill imagen,double[] arregloFrecuencia){
         ArrayList<Byte> lis = codificarEnLista(imagen,arregloFrecuencia);
         return convertirAPrimitivo(lis);
 
     }
+    //public byte[] codificarHead(Header head,)
+
+    /*public FileOutputStream aplicarCodificacion(ImagenWill imagen){
+
+        byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
+        Header head= new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia(),imagenCodificada.length);
+        codificarHead(head);
+    }*/
 
 
 }

@@ -29,13 +29,13 @@ public class Huffman {
             sumaTotal += frecuencias[i];
         }
 
-        double[] output = new double[256];
+        double[]output= new double[256];
 
-        for (int i = 0; i < frecuencias.length; i++){
-            double probFrecuencia = frecuencias[i]/sumaTotal;
-            output[i] = probFrecuencia;
+        for (int i = 0; i < frecuencias.length; i++) {
+            double probFrecuencia=frecuencias[i] / sumaTotal;
+            output[i]=probFrecuencia;
+
         }
-
         return output;
     }
 

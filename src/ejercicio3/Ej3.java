@@ -15,7 +15,7 @@ public class Ej3 {
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 3 \n");
         Codificador codifica=new Codificador();
-        codifica.codificar(imagenOriginal,imagenOriginal.getArregloFrecuencia());
+        codifica.aplicarCodificacion(imagenOriginal);
         //codifica.imprimirCodigo();
 
         System.out.println("\n -------");
