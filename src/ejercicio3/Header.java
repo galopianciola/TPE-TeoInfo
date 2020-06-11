@@ -7,14 +7,15 @@ import java.io.ObjectOutputStream;
 public class Header {
     private int alto;
     private int ancho;
-    private double[] arregloProbabilidades;
-    private int longitud;
+    private int cantColor;
+    private double[] arregloFrecuencias;
 
-    public Header(int alto, int ancho, double[] arregloProbabilidades, int longitud) {
+
+    public Header(int alto, int ancho, double[] arregloFrecuencias) {
         this.alto = alto;
         this.ancho = ancho;
-        this.arregloProbabilidades = arregloProbabilidades;
-        this.longitud = longitud;
+        this.arregloFrecuencias = arregloFrecuencias;
+
     }
 
     public int getAlto() {
@@ -25,11 +26,17 @@ public class Header {
         return ancho;
     }
 
-    public double[] getArregloProbabilidades() {
-        return arregloProbabilidades;
+    public int getCantColor() {
+        int out=0;
+        for (int i=0;i<arregloFrecuencias.length;i++)
+            if(arregloFrecuencias[i]!=0)
+                out++;
+        return out;
     }
 
-    public int getLongitud() {
-        return longitud;
+
+    public int getFrecuenciaColor(int posicion){
+        return (int)arregloFrecuencias[posicion];
     }
+
 }

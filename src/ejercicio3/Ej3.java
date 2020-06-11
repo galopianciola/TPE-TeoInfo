@@ -15,26 +15,9 @@ public class Ej3 {
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 3 \n");
         Codificador codifica=new Codificador();
-        //codifica.aplicarCodificacion(imagenOriginal);
-        //codifica.imprimirCodigo();
+        codifica.aplicarCodificacion(imagenOriginal);
 
         System.out.println("\n -------");
-
-       /* try {
-            // Obtener bytes que contienen la secuencia original codificada
-            byte[] byteArray = h1.codificar(imagenOriginal);
-
-            // Guardar la codificación en un archivo binario
-            FileOutputStream fos = new FileOutputStream("output.bin");
-            fos.write(byteArray);
-            //fos.write (anchoimagen)
-            //fos.write(altoimagagen(
-            //fos.write(tamaño en bits)
-            fos.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
 
     }
