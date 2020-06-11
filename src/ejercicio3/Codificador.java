@@ -11,6 +11,7 @@ import java.util.Hashtable;
 public class Codificador {
     //clave: color, valor: codigo
     private Hashtable<Integer,String> codigo = new Hashtable<>();
+    private int bitsValidos;
 
     public ArrayList<Byte> codificarEnLista(ImagenWill imagen,double[]arregloFrecuencia){
         Huffman h1=new Huffman(arregloFrecuencia);
@@ -33,7 +34,7 @@ public class Codificador {
         byte buffer = 0; //byte temporal que voy armando
         int bufferLength = 8; //size: byte
         int bufferPos = 0;
-
+        int longitudBits = 0;
         for (String data: code){ //para todos los elementos String de la lista code
             for (int i = 0; i < data.length(); i++) { //para cada caracter de ese String
                 char actual = data.charAt(i); //obtengo el char
@@ -41,7 +42,7 @@ public class Codificador {
                 // La operación de corrimiento pone un '0'
                 buffer = (byte) (buffer << 1);
                 bufferPos++;
-
+                longitudBits++;
                 //si era un 0 ya queda,
                 //y si era un 1 (osea que necesito cambiarlo)
                 if (actual == '1'){
@@ -62,8 +63,6 @@ public class Codificador {
                 //no completo el byte, estoy en el ultimo caracter del string, y ademas no hay mas strings
                 if ((bufferPos != bufferLength) && (i == data.length()-1) && (code.indexOf(data)+1 == code.size())){
                     buffer = (byte) (buffer << (bufferLength- bufferPos)); // nos aseguramos que los 0s inservibles queden al final
-                    //CUESTION DEL DECODIFICADOR BRO
-                    //porque siempre inicializo el buffer en 0
                 }
 
 
@@ -72,7 +71,7 @@ public class Codificador {
                 //el resto de la division sera cuantos bits invalidos debera desconsiderar.
             }
         }
-
+        this.bitsValidos = longitudBits;
         return result;
     }
 
@@ -102,14 +101,17 @@ public class Codificador {
         return convertirAPrimitivo(lis);
 
     }
-    //public byte[] codificarHead(Header head,)
 
-    /*public FileOutputStream aplicarCodificacion(ImagenWill imagen){
+
+    public FileOutputStream aplicarCodificacion(ImagenWill imagen){
 
         byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
-        Header head= new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia(),imagenCodificada.length);
+
+        Header head= new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia(),bitsValidos);
         codificarHead(head);
-    }*/
+
+
+    }
 
 
 }

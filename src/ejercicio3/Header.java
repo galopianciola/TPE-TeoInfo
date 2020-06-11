@@ -17,15 +17,19 @@ public class Header {
         this.longitud = longitud;
     }
 
-    public byte[] convertirAByte() throws IOException { // De objeto a byte[]
-        ByteArrayOutputStream bs = new ByteArrayOutputStream();
-        ObjectOutputStream os;
-
-        os = new ObjectOutputStream(bs);
-        os.writeObject(this); // convierte este objeto header a un arreglo de bytes.
-        os.close();
-
-        return bs.toByteArray();
+    public int getAlto() {
+        return alto;
     }
 
+    public int getAncho() {
+        return ancho;
+    }
+
+    public double[] getArregloProbabilidades() {
+        return arregloProbabilidades;
+    }
+
+    public int getLongitud() {
+        return longitud;
+    }
 }
