@@ -14,7 +14,7 @@ public class Decodificador {
     private static int LONGITUDBUFFER = 8;
 
 
-    public static char[] extraerArchivo(String inputFilepath, int cantBits) {
+    public static char[] bytesDecoding(String inputFilepath, int cantBits) {
         char[] restoredSequence = new char[cantBits];
 
         try {
@@ -59,6 +59,8 @@ public class Decodificador {
     public ImagenWill decodificar(String ruta){
         try {
             DataInputStream imgCodificada = new DataInputStream(new FileInputStream(ruta));
+
+            //primero traigo los datos del header
             int alto = imgCodificada.readInt();
             int ancho = imgCodificada.readInt();
             System.out.println("decodificacion" + alto);
@@ -71,6 +73,7 @@ public class Decodificador {
                 frecuencias[i] = 0;
             }
 
+            //despues traigo cada color con su frecuencia (de ahi armare su probabilidad)
             for (int i=0; i < cantColores; i++){
                 int color = imgCodificada.readInt();
                 int frecuencia = imgCodificada.readInt();
@@ -78,11 +81,11 @@ public class Decodificador {
                 frecuencias[color] = frecuencia;
             }
 
+            //genero el codigo mediante huffman (teniendo como dato las frecuencias de cada color, que luego seran probabilidades)
             Huffman huffman = new Huffman(frecuencias);
             this.codigo = huffman.getCodigoImagen();
 
-            byte[] imagenCodificada = new byte[];
-            imgCodificada.read(imagenCodificada);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
