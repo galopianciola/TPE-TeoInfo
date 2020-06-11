@@ -3,6 +3,7 @@ package ejercicio3;
 import common.ImagenWill;
 
 import java.awt.*;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -100,32 +101,33 @@ public class Codificador {
     }
 
 
-    public FileOutputStream aplicarCodificacion(ImagenWill imagen){
+    public void aplicarCodificacion(ImagenWill imagen){
         try {
             FileOutputStream fos= new FileOutputStream("output.bin");
+            DataOutputStream dos = new DataOutputStream(fos);
             byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
 
-            Header head= new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia());
-            fos.write(head.getAlto());
-            fos.write(head.getAncho());
-            fos.write(head.getCantColor());
+            Header head = new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia());
+            dos.writeInt(head.getAlto());
+            System.out.println(head.getAlto());
+            dos.writeInt(head.getAncho());
+            System.out.println(head.getAncho());
+            dos.writeInt(head.getCantColor());
 
             for (int i=0;i<imagen.getArregloFrecuencia().length;i++){
                 if(imagen.getArregloFrecuencia()[i]!=0) {
-                    fos.write(i);
-                    fos.write(head.getFrecuenciaColor(i));
+                    dos.writeInt(i);
+                    dos.writeInt(head.getFrecuenciaColor(i));
                 }
             }
-            fos.write(imagenCodificada);
-            fos.close();
-            return fos;
+            dos.write(imagenCodificada);
+            dos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
     }
 
 

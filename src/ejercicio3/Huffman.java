@@ -51,11 +51,11 @@ public class Huffman {
     }
 
 
-    public void calcularHuffman(double[] frecuencias){
+    public void calcularHuffman(){
         //en este metodo obtendre el arbol de codificacion, para luego codificar recorriendolo con 0s y 1s
 
         //ejecuto este metodo para obtener en la lista this.simbolos los objetos Nodo iniciales (pares simbolo - probabilidad)
-        this.getNodosIniciales(frecuencias);
+        this.getNodosIniciales(this.frecuencias);
 
         //genero un comparador que luego me ayude a ordenar la lista de simbolo-probabilidad segun probabilidad
         Comparator comparaProbabilidades = new Comparator<Nodo>(){
@@ -115,9 +115,9 @@ public class Huffman {
         }
     }
 
-    public Hashtable getCodigoImagen(){
+    public Hashtable<Integer,String> getCodigoImagen(){
         Hashtable<Integer,String>output=new Hashtable<>();
-        calcularHuffman(this.frecuencias);
+        calcularHuffman();
         generarCodigo(this.arbol,"",output);
         return output;
     }

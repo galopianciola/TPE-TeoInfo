@@ -2,9 +2,9 @@ package ejercicio3;
 
 import common.ImagenWill;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 
@@ -56,18 +56,40 @@ public class Decodificador {
         return restoredSequence;
     }
 
-    public ImagenWill decodificar(String archivo, int cantBits, int ancho, int alto, double[] probabilidades){
-        char[] secuencia = extraerArchivo(archivo,cantBits);
-        if ((secuencia.length % 8) != 0){
-            int aDescartar = secuencia.length % 8;
+    public ImagenWill decodificar(String ruta){
+        try {
+            DataInputStream imgCodificada = new DataInputStream(new FileInputStream(ruta));
+            int alto = imgCodificada.readInt();
+            int ancho = imgCodificada.readInt();
+            System.out.println("decodificacion" + alto);
+            System.out.println(ancho);
+            int cantColores = imgCodificada.readInt();
+
+            double[] frecuencias = new double[256];
+            //inicializo el arreglo en 0
+            for (int i = 0; i < frecuencias.length; i++){
+                frecuencias[i] = 0;
+            }
+
+            for (int i=0; i < cantColores; i++){
+                int color = imgCodificada.readInt();
+                int frecuencia = imgCodificada.readInt();
+                System.out.println(color + ", " + frecuencia);
+                frecuencias[color] = frecuencia;
+            }
+
+            Huffman huffman = new Huffman(frecuencias);
+            this.codigo = huffman.getCodigoImagen();
+
+            byte[] imagenCodificada = new byte[];
+            imgCodificada.read(imagenCodificada);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        //calculo Huffman (pasandole las probabilidades)
-        //llamo a generarCodigo para ir recorriendo el arbol y obtener el codigo (recibe el arbol obtenido y "")
-        //todo: como necesito otra hashtable propia del decodificador, SEPARAME TODO PERRI
-        Huffman h1=new Huffman(probabilidades);
-        codigo=h1.getCodigoImagen();
-        //aca genera el codigo huffman y lo guarda en el hash :)
         return null;
     }
 

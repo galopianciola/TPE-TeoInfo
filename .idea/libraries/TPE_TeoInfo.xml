@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="TPE-TeoInfo">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/TPE_TeoInfo_jar/TPE-TeoInfo.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

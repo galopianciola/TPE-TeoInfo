@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 public class Header {
     private int alto;
     private int ancho;
-    private int cantColor;
     private double[] arregloFrecuencias;
 
 

@@ -19,7 +19,8 @@ public class Ej3 {
 
         System.out.println("\n -------");
 
-
+        Decodificador decodifica = new Decodificador();
+        decodifica.decodificar("output.bin");
     }
 
 }
