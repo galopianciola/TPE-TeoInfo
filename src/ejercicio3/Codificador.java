@@ -108,9 +108,9 @@ public class Codificador {
         byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
 
         Header head= new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia(),bitsValidos);
-        codificarHead(head);
+        //codificarHead(head);
 
-
+        return null;
     }
 
 
