@@ -21,19 +21,18 @@ public class Codificador {
         codigo=h1.getCodigoImagen();
         ArrayList<String> code = new ArrayList<>(); //a codificar
         ArrayList<Byte> result = new ArrayList<>(); //resultado de codificacion
-        int suma = 0;
+
 
         for (int i = 0; i < imagen.getImagen().getWidth(); i++) {
             for (int j = 0; j < imagen.getImagen().getHeight(); j++) {
                 //primero obtengo el valor a codificar
                 Color colorPixel = new Color(imagen.getImagen().getRGB(i, j));
                 int valorPixel = colorPixel.getRed();
-                suma =+ this.codigo.get(new Integer(valorPixel)).length(); //sumamos el tamanio de cada codigo de cada pixel
                 code.add(this.codigo.get(new Integer(valorPixel))); //obtengo el codigo y lo agrego a la lista code de String
             }
         }
-        imagen.setBitsCodificado(suma); //agregamos el tamanio calculado a la imagen
-        //todo: aca debo pasarlo a Byte y agregarlo a result
+
+
         byte buffer = 0; //byte temporal que voy armando
         int bufferLength = 8; //size: byte
         int bufferPos = 0;
@@ -55,8 +54,6 @@ public class Codificador {
 
                 //si se completo el byte temporal actual
                 if (bufferPos == bufferLength) {
-                    //Byte aux = new Byte(buffer);
-                    //System.out.println(aux.toString());
                     result.add(buffer); //lo agrego a la lista de bytes codificados
                     buffer = 0; //y reinicio el buffer
                     bufferPos = 0;
@@ -100,10 +97,10 @@ public class Codificador {
 
     }
 
-
+    //metodo principal
     public void aplicarCodificacion(ImagenWill imagen){
         try {
-            FileOutputStream fos= new FileOutputStream("output.bin");
+            FileOutputStream fos= new FileOutputStream(imagen.getNombreImagen()+".bin");
             DataOutputStream dos = new DataOutputStream(fos);
             byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
 
