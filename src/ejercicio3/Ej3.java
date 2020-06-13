@@ -27,12 +27,12 @@ public class Ej3 {
         ImagenWill imagenRecuperada= decodifica.restaurarImagen("output.bin");
 
 
-       /* File outputfile = new File("imagenRecuperada.jpg");
+       File outputfile = new File("imagenRecuperada.jpg");
         try {
             ImageIO.write(imagenRecuperada.getImagen(), "jpg", outputfile);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 }

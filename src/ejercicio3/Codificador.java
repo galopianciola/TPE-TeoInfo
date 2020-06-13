@@ -63,6 +63,8 @@ public class Codificador {
                 //no completo el byte, estoy en el ultimo caracter del string, y ademas no hay mas strings
                 if ((bufferPos != bufferLength) && (i == data.length()-1) && (code.indexOf(data)+1 == code.size())){
                     buffer = (byte) (buffer << (bufferLength- bufferPos)); // nos aseguramos que los 0s inservibles queden al final
+                    result.add(buffer); //lo agrego a la lista de bytes codificados//lo agrego a la lista de bytes codificados result.add(buffer);
+
                 }
             }
         }
@@ -101,7 +103,7 @@ public class Codificador {
     //METODO PRINCIPAL
     public void aplicarCodificacion(ImagenWill imagen){
         try {
-            FileOutputStream fos= new FileOutputStream(imagen.getNombreImagen()+".bin"); //output.bin
+            FileOutputStream fos= new FileOutputStream("output.bin"); //output.bin
             DataOutputStream dos = new DataOutputStream(fos); //helper para armar el .bin
             byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
 
@@ -115,16 +117,14 @@ public class Codificador {
             for (int i=0;i<imagen.getArregloFrecuencia().length;i++){
                 if(imagen.getArregloFrecuencia()[i]!=0) {
                     dos.writeInt(i); //color
-                    dos.writeInt(head.getFrecuenciaColor(i)); //frecuencia (cant de repeticiones) de ese color
+                    dos.writeInt(head.getFrecuenciaColor(i)); //frecuencia (cant de repeticiones) de esecolor
                 }
             }
 
-            //ahora meto cada uno de los bytes de la imagen codificada
-            for (int i = 0; i < imagenCodificada.length; i++){
-                dos.writeByte(imagenCodificada[i]);
-            }
-
+            //ahora meto los bytes de la imagen codificada
+            dos.write(imagenCodificada);
             dos.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
