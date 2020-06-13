@@ -94,7 +94,6 @@ public class Decodificador {
             Huffman huffman = new Huffman(frecuencias);
             this.codigo = huffman.getCodigoImagen();
 
-            //TODO:terminar de pasar por archivo el arreglo de bytes
             ArrayList<Byte> bytes = new ArrayList<>();
             while (imgCodificada.available()>0) {
                 bytes.add(imgCodificada.readByte());
@@ -120,7 +119,7 @@ public class Decodificador {
     }
 
 
-    //metodo principal
+    //METODO PRINCIPAL
     public ImagenWill restaurarImagen(String ruta){
         decodificar(ruta);
         return new ImagenWill(bytesDecoding(),ruta+" restaurada");

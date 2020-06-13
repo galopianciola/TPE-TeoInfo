@@ -98,7 +98,6 @@ public class Huffman {
     }
 
 
-    //todo: codificar a nivel bit
     public void generarCodigo(Nodo arbol, String codigo,Hashtable<Integer,String>hash){
         //este metodo recorrera el arbol de codificacion, contando 0 o 1 segun la rama,
         //y asignando el codigo recorrido al simbolo en caso de llegar a una hoja

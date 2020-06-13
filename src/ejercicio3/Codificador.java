@@ -79,6 +79,7 @@ public class Codificador {
         return ret;
     }
 
+
     public void imprimirCodigo(){
         //obtengo todas las claves del hash
         Enumeration claves = this.codigo.keys();
@@ -97,35 +98,37 @@ public class Codificador {
 
     }
 
-    //metodo principal
+    //METODO PRINCIPAL
     public void aplicarCodificacion(ImagenWill imagen){
         try {
-            FileOutputStream fos= new FileOutputStream(imagen.getNombreImagen()+".bin");
-            DataOutputStream dos = new DataOutputStream(fos);
+            FileOutputStream fos= new FileOutputStream(imagen.getNombreImagen()+".bin"); //output.bin
+            DataOutputStream dos = new DataOutputStream(fos); //helper para armar el .bin
             byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
 
+            //formalizo el header y lo meto (entero a entero) en el .bin
             Header head = new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia());
             dos.writeInt(head.getAlto());
-            System.out.println(head.getAlto());
             dos.writeInt(head.getAncho());
-            System.out.println(head.getAncho());
             dos.writeInt(head.getCantColor());
 
+            //meto en el .bin las frecuencias para que el decoder rearme las probabilidades (y despues el codigo)
             for (int i=0;i<imagen.getArregloFrecuencia().length;i++){
                 if(imagen.getArregloFrecuencia()[i]!=0) {
-                    dos.writeInt(i);
-                    dos.writeInt(head.getFrecuenciaColor(i));
+                    dos.writeInt(i); //color
+                    dos.writeInt(head.getFrecuenciaColor(i)); //frecuencia (cant de repeticiones) de ese color
                 }
             }
-            dos.write(imagenCodificada);
+
+            //ahora meto cada uno de los bytes de la imagen codificada
+            for (int i = 0; i < imagenCodificada.length; i++){
+                dos.writeByte(imagenCodificada[i]);
+            }
+
             dos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
