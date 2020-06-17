@@ -27,9 +27,9 @@ public class Ej3 {
         ImagenWill imagenRecuperada= decodifica.restaurarImagen("output.bin");
 
 
-       File outputfile = new File("imagenRecuperada.jpg");
+       File outputfile = new File("imagenRecuperada.bmp");
         try {
-            ImageIO.write(imagenRecuperada.getImagen(), "jpg", outputfile);
+            ImageIO.write(imagenRecuperada.getImagen(), "bmp", outputfile);
         } catch (IOException e) {
             e.printStackTrace();
         }

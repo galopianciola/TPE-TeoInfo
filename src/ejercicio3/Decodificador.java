@@ -25,64 +25,60 @@ public class Decodificador {
 
     public BufferedImage bytesDecoding() {
         BufferedImage out=new BufferedImage(ancho,alto,BufferedImage.TYPE_INT_RGB);
-
+        ArrayList<Integer> decode=new ArrayList<>();
         byte mask = (byte) (1 << (LONGITUDBUFFER - 1)); // mask: 10000000
         int bufferPos = 0;
         String temporal="";
         int k=0; // indice en el arreglo de bytes (secuencia codificada)
-        int i=0; // indice ancho de imagen
-        int j=0; // indice alto de imagen
-        while ((k<inputSequence.length) && (i*j < ancho*alto)){ //para todos los bytes a decodificar
-                byte buffer = inputSequence[k];
-                while (bufferPos < LONGITUDBUFFER) {
-                    //si es un uno
-                    if ((buffer & mask) == mask) {  // 10000000
-                        temporal = temporal + "1";
-                    } else { //si es un 0
-                        temporal = temporal + "0";
-                    }
+        System.out.println(k);
+        while (k<inputSequence.length) { //para todos los bytes a decodificar
+            byte buffer = inputSequence[k];
+            while (bufferPos < LONGITUDBUFFER) {
+                //si es un uno
+                if ((buffer & mask) == mask) {  // 10000000
+                    temporal = temporal + "1";
+                } else { //si es un 0
+                    temporal = temporal + "0";
+                }
 
-                    //si los bits recuperados hasta ahora representan un codigo
-                    if (codigo.contains(temporal)) {
-                        Color colorPixel = null;
-                        Enumeration claves = this.codigo.keys();
-                        Enumeration valores = this.codigo.elements();
-                        while (claves.hasMoreElements()) {
-                            Integer clave = (Integer) claves.nextElement();
-                            String valor = (String) valores.nextElement();
+                //si los bits recuperados hasta ahora representan un codigo
+                if (codigo.contains(temporal)) {
+                    Enumeration claves = this.codigo.keys();
+                    Enumeration valores = this.codigo.elements();
 
-                            if (valor.equals(temporal)) {
-                                colorPixel = new Color(clave, clave, clave);
-                                break;
-                            }
+
+                    while (claves.hasMoreElements())  {
+                        Integer clave = (Integer) claves.nextElement();
+                        String valor = (String) valores.nextElement();
+                        if (valor.equals(temporal)) {
+                            decode.add(clave);
+                            temporal="";
+                            break; //corto la busqueda pq ya encontre el color
                         }
-                        if (i < ancho) { // si no llegue al final del ancho
-                            if (j < alto) { //y tampoco del alto
-                                out.setRGB(i, j, colorPixel.getRGB());
-                                temporal = "";
-                                j++; //encontre el color del pixel, avanzo al proximo (pero aun no termine de leer el byte)
-                            } else { // llegue al final del alto e inserto el pixel en la siguiente posicion del ancho
-                                j = 0; //reiniciando el alto
-                                i++; //avanzando en ancho
-                                if (i==ancho) {
-                                    return out;
-                                }else{
-                                    out.setRGB(i, j, colorPixel.getRGB());
-                                    temporal = "";
-                                }
-                             }
-                        }
-
-                        //para leer el siguiente bit
-                        buffer = (byte) (buffer << 1);
-                        bufferPos++;
                     }
                 }
-                k++;
-                bufferPos = 0;
+                //para leer el siguiente bit
+                buffer = (byte) (buffer << 1);
+                bufferPos++;
+            }
+            k++;
+            bufferPos = 0;
+
 
         }
-        return null;
+
+        //reconstruccion de la imagen
+        k=0;
+        for (int i=0;i<ancho;i++){
+            for (int j=0;j<alto;j++){
+                Color colorPixel = new Color(decode.get(k),decode.get(k),decode.get(k));
+                out.setRGB(i,j,colorPixel.getRGB());
+                k++;
+                if((i==1309)&&(j==1696))
+                    break;
+            }
+        }
+        return out;
     }
 
     public void decodificar(String ruta){
