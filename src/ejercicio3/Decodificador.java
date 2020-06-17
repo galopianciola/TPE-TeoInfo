@@ -2,6 +2,7 @@ package ejercicio3;
 
 import common.ImagenWill;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -30,7 +31,6 @@ public class Decodificador {
         int bufferPos = 0;
         String temporal="";
         int k=0; // indice en el arreglo de bytes (secuencia codificada)
-        System.out.println(k);
         while (k<inputSequence.length) { //para todos los bytes a decodificar
             byte buffer = inputSequence[k];
             while (bufferPos < LONGITUDBUFFER) {
@@ -57,6 +57,7 @@ public class Decodificador {
                         }
                     }
                 }
+
                 //para leer el siguiente bit
                 buffer = (byte) (buffer << 1);
                 bufferPos++;
@@ -74,8 +75,6 @@ public class Decodificador {
                 Color colorPixel = new Color(decode.get(k),decode.get(k),decode.get(k));
                 out.setRGB(i,j,colorPixel.getRGB());
                 k++;
-                if((i==1309)&&(j==1696))
-                    break;
             }
         }
         return out;
@@ -141,9 +140,18 @@ public class Decodificador {
 
 
     //METODO PRINCIPAL
-    public ImagenWill restaurarImagen(String ruta){
+    public ImagenWill restaurarImagen(String ruta,String nombre){
         decodificar(ruta);
-        return new ImagenWill(bytesDecoding()," restaurada");
+        return new ImagenWill(bytesDecoding(),nombre);
+    }
+
+    public void crearImagenBMP(ImagenWill imagenRecuperada){
+        File outputfile = new File(imagenRecuperada.getNombreImagen()+" recuperada.bmp");
+        try {
+            ImageIO.write(imagenRecuperada.getImagen(), "bmp", outputfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

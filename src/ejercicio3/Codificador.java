@@ -16,8 +16,8 @@ public class Codificador {
     private Hashtable<Integer,String> codigo = new Hashtable<>();
 
 
-    public ArrayList<Byte> codificarEnLista(ImagenWill imagen,double[]arregloFrecuencia){
-        Huffman h1=new Huffman(arregloFrecuencia);
+    public ArrayList<Byte> codificarEnLista(ImagenWill imagen,Huffman h1){
+
         codigo=h1.getCodigoImagen();
         ArrayList<String> code = new ArrayList<>(); //a codificar
         ArrayList<Byte> result = new ArrayList<>(); //resultado de codificacion
@@ -36,7 +36,7 @@ public class Codificador {
         byte buffer = 0; //byte temporal que voy armando
         int bufferLength = 8; //size: byte
         int bufferPos = 0;
-
+        int contadorCodigos=0;
         for (String data: code){ //para todos los elementos String de la lista code
             for (int i = 0; i < data.length(); i++) { //para cada caracter de ese String
                 char actual = data.charAt(i); //obtengo el char
@@ -61,12 +61,14 @@ public class Codificador {
 
                 //si no se completa el byte temporal porque es el ultimo byte a llenar...
                 //no completo el byte, estoy en el ultimo caracter del string, y ademas no hay mas strings
-                if ((bufferPos != bufferLength) && (i == data.length()-1) && (code.indexOf(data)+1 == code.size())){
+
+                if ((bufferPos < bufferLength) && (i == data.length()-1) && (contadorCodigos == code.size()-1)){
                     buffer = (byte) (buffer << (bufferLength- bufferPos)); // nos aseguramos que los 0s inservibles queden al final
                     result.add(buffer); //lo agrego a la lista de bytes codificados//lo agrego a la lista de bytes codificados result.add(buffer);
 
                 }
             }
+            contadorCodigos++;
         }
 
         return result;
@@ -94,18 +96,18 @@ public class Codificador {
         }
     }
 
-    public byte[] codificarImagen (ImagenWill imagen,double[] arregloFrecuencia){
-        ArrayList<Byte> lis = codificarEnLista(imagen,arregloFrecuencia);
+    public byte[] codificarImagen (ImagenWill imagen,Huffman h1){
+        ArrayList<Byte> lis = codificarEnLista(imagen,h1);
         return convertirAPrimitivo(lis);
 
     }
 
     //METODO PRINCIPAL
-    public void aplicarCodificacion(ImagenWill imagen){
+    public void aplicarCodificacion(ImagenWill imagen,Huffman h1){
         try {
-            FileOutputStream fos= new FileOutputStream("output.bin"); //output.bin
+            FileOutputStream fos= new FileOutputStream(imagen.getNombreImagen()+".bin"); //output.bin
             DataOutputStream dos = new DataOutputStream(fos); //helper para armar el .bin
-            byte[] imagenCodificada=codificarImagen(imagen,imagen.getArregloFrecuencia());
+            byte[] imagenCodificada=codificarImagen(imagen,h1);
 
             //formalizo el header y lo meto (entero a entero) en el .bin
             Header head = new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia());
