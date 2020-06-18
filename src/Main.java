@@ -2,6 +2,7 @@ import common.ImagenWill;
 import ejercicio1.Ej1;
 import ejercicio2.Ej2;
 import ejercicio3.Ej3;
+import ejercicio4.Ej4;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -37,6 +38,9 @@ public class Main {
 
         Ej3 ej3 = new Ej3();
         ej3.ejecutar(imagenOriginal,imagenPolicia,imagenMasParecida);
+
+        Ej4 ej4 =new Ej4();
+        ej4.ejecutar(imagenOriginal);
 
     }
 }

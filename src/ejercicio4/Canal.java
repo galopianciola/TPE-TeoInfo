@@ -9,24 +9,24 @@ import java.util.Random;
 public class Canal {
 
     static final double EPSILON = 0.1;
-
-    private double[][] matrizFrecuencias = new double[256][256];  //ver si puedo tenerla de 16x16
-
+    static final int tamanio=256;
+    private double[][] matrizFrecuencias = new double[tamanio][tamanio];  //ver si puedo tenerla de 16x16
+    private int ancho;
+    private int alto;
 
 
 
     public int getTotalColumna(int columna){
         int suma = 0;
-        for(int fila=0; fila<256;fila++) {
+        for(int fila = 0; fila < tamanio; fila++) {
             suma += matrizFrecuencias[columna][fila];
         }
         return suma;
-
     }
 
     public Canal(ImagenWill imgX, ImagenWill imgY) {
-        for(int i=0;i<imgX.getImagen().getWidth();i++){
-            for(int j=0;j< imgX.getImagen().getHeight();j++){
+        for(int i=0; i < imgX.getImagen().getWidth(); i++){
+            for(int j=0; j < imgX.getImagen().getHeight(); j++){
 
                 Color colorPixelX = new Color(imgX.getImagen().getRGB(i, j));
                 int valorPixelX = colorPixelX.getRed();
@@ -37,15 +37,19 @@ public class Canal {
                 matrizFrecuencias[valorPixelX][valorPixelY] ++;
             }
         }
+        this.ancho = imgX.getImagen().getWidth();
+        this.alto = imgY.getImagen().getHeight();
     }
+
 
 
     public double [] [] getMatrizCondicional() {
         double [][] ret = new double[256][256];
-        for (int columnaActual = 0; columnaActual < 256; columnaActual++) {
+        for (int columnaActual = 0; columnaActual < tamanio; columnaActual++) {
             int sumaTotal = this.getTotalColumna(columnaActual);
-            for (int filaActual = 0; filaActual < 256; filaActual++) {
-                ret [columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / sumaTotal);
+            for (int filaActual = 0; filaActual < tamanio; filaActual++) {
+                if (matrizFrecuencias[columnaActual][filaActual] != 0)
+                    ret [columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / sumaTotal);
             }
         }
         return ret;
@@ -53,23 +57,23 @@ public class Canal {
 
 
     public double [] [] getMatrizConjunta() {
-        double [][] ret = new double[256][256];
-        int total = 4000;                   //buscar forma de tener el ancho por alto asi no recorro matriz (si es de 256)
-        for (int columnaActual = 0; columnaActual < 256; columnaActual++) {
-            for (int filaActual = 0; filaActual < 256; filaActual++) {
-                ret [columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / total);
+        double [][] ret = new double[tamanio][tamanio];
+        int total = this.ancho * this.alto;
+        for (int columnaActual = 0; columnaActual < tamanio; columnaActual++) {
+            for (int filaActual = 0; filaActual < tamanio; filaActual++) {
+                if (matrizFrecuencias[columnaActual][filaActual] != 0)
+                    ret [columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / total);
             }
         }
         return ret;
     }
 
     public double [] getProbAcumuladaX(){
-        double [] ret = new double[256];
-        double [][] matrizConjunta = this.getMatrizConjunta();
+        double [] ret = new double[tamanio];
         int suma=0;
-        for (int c = 0; c <256; c++){
-            for (int f =0; f<256 ; f++){
-                suma += matrizConjunta[c][f];
+        for (int c = 0; c <tamanio; c++){
+            for (int f =0; f<tamanio ; f++){
+                suma += this.getMatrizConjunta()[c][f];
             }
            ret[c] = suma;
         }
@@ -78,13 +82,21 @@ public class Canal {
 
 
     public double getRuido(){
-        double ruidoAnterior = 0;
+        double ruidoAnterior = -1;
         double ruidoActual =0;
         int pruebas =0;
 
         while(!converge(ruidoActual,ruidoAnterior) && (pruebas < 10000)){
+            int entrada = this.generarEntrada();
+            pruebas++;
 
+            //verificar condicion favorable (exitos++)
+
+            //actualizar ruidoAnterior
+            //actualizar ruidoActual
         }
+
+        //devolver ruidoActual
 
         return 0;
     }
@@ -99,7 +111,7 @@ public class Canal {
                 return i;
             }
         }
-        return i;
+        return -1;
     }
 
     //public int generarSalida(){
