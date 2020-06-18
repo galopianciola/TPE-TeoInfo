@@ -103,9 +103,9 @@ public class Codificador {
     }
 
     //METODO PRINCIPAL
-    public void aplicarCodificacion(ImagenWill imagen,Huffman h1){
+    public void aplicarCodificacion(ImagenWill imagen,Huffman h1, String rutaBin){
         try {
-            FileOutputStream fos= new FileOutputStream(imagen.getNombreImagen()+".bin"); //output.bin
+            FileOutputStream fos= new FileOutputStream(rutaBin); //output.bin
             DataOutputStream dos = new DataOutputStream(fos); //helper para armar el .bin
             byte[] imagenCodificada=codificarImagen(imagen,h1);
 
