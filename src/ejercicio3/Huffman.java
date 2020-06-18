@@ -17,6 +17,7 @@ public class Huffman {
     //aqui tendre la lista inicial de cada simbolo con su probabilidad
     private ArrayList<Nodo> simbolos = new ArrayList<>();
     private double[]frecuencias;
+
     public Huffman(double[]arregloFrecuencias){
         this.frecuencias=arregloFrecuencias;
     }
