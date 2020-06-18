@@ -48,12 +48,16 @@ public class Canal {
         for (int columnaActual = 0; columnaActual < tamanio; columnaActual++) {
             int sumaTotal = this.getTotalColumna(columnaActual);
             for (int filaActual = 0; filaActual < tamanio; filaActual++) {
-                if (matrizFrecuencias[columnaActual][filaActual] != 0)
-                    ret [columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / sumaTotal);
+                if (matrizFrecuencias[columnaActual][filaActual] != 0) {
+                    ret[columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / sumaTotal);
+                }
             }
         }
         return ret;
     }
+
+
+
 
 
     public double [] [] getMatrizConjunta() {
@@ -61,8 +65,9 @@ public class Canal {
         int total = this.ancho * this.alto;
         for (int columnaActual = 0; columnaActual < tamanio; columnaActual++) {
             for (int filaActual = 0; filaActual < tamanio; filaActual++) {
-                if (matrizFrecuencias[columnaActual][filaActual] != 0)
-                    ret [columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / total);
+                if (matrizFrecuencias[columnaActual][filaActual] != 0) {
+                    ret[columnaActual][filaActual] = ((matrizFrecuencias[columnaActual][filaActual]) / total);
+                }
             }
         }
         return ret;
@@ -113,8 +118,6 @@ public class Canal {
         }
         return -1;
     }
-
-    //public int generarSalida(){
 
 
     public boolean converge(double actual, double anterior){

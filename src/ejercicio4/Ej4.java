@@ -29,9 +29,11 @@ public class Ej4 {
         Canal c10=new Canal(imagenOriginal,this.imagenCanal10);
 
 
-        for(double[] row :c2.getMatrizCondicional()){
-            printRow(row);
-        }
+        //for(double[] row :c2.getMatrizCondicional()){
+          //  printRow(row);
+        //}
+        c2.getMatrizCondicional();
+        c2.getMatrizConjunta();
     }
 
     public static void printRow(double[] row) {
