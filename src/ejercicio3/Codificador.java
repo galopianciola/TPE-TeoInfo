@@ -110,16 +110,17 @@ public class Codificador {
             byte[] imagenCodificada=codificarImagen(imagen,h1);
 
             //formalizo el header y lo meto (entero a entero) en el .bin
-            Header head = new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),imagen.getArregloFrecuencia());
+            Header head = new Header(imagen.getImagen().getHeight(),imagen.getImagen().getWidth(),h1.getFrecuencias());
             dos.writeInt(head.getAlto());
             dos.writeInt(head.getAncho());
             dos.writeInt(head.getCantColor());
 
             //meto en el .bin las frecuencias para que el decoder rearme las probabilidades (y despues el codigo)
-            for (int i=0;i<imagen.getArregloFrecuencia().length;i++){
-                if(imagen.getArregloFrecuencia()[i]!=0) {
+            for (int i = 0; i < h1.getFrecuencias().length; i++){
+                if (h1.getFrecuencias()[i]!=0) {
                     dos.writeInt(i); //color
-                    dos.writeInt(head.getFrecuenciaColor(i)); //frecuencia (cant de repeticiones) de esecolor
+                    dos.writeInt((int) h1.getFrecuencias()[i]);
+                    //dos.writeInt(head.getFrecuenciaColor(i)); //frecuencia (cant de repeticiones) de esecolor
                 }
             }
 

@@ -18,21 +18,25 @@ public class Ej3 {
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 3");
         Codificador codificaH1=new Codificador();
-        Huffman h1=new Huffman(imagenOriginal.getArregloFrecuencia());
 
+        Huffman h1=new Huffman(imagenOriginal.getArregloFrecuencia());
         //inciso a
         codificaH1.aplicarCodificacion(imagenOriginal, h1, imagenOriginal.getNombreImagen()+".bin");
         System.out.println("Se ha comprimido la imagen original exitosamente indicando el inciso a)");
 
+
+        Huffman h1incisob = new Huffman(imagenOriginal.getArregloFrecuencia());
         //inciso b
-        codificaH1.aplicarCodificacion(imagenMasParecida,h1, imagenMasParecida.getNombreImagen()+".bin");
+        codificaH1.aplicarCodificacion(imagenMasParecida,h1incisob, imagenMasParecida.getNombreImagen()+".bin");
         System.out.println("Se ha comprimido la imagen mas parecida (con codigo de imagen original) exitosamente indicando el inciso b)");
 
 
+        Huffman h1incisoc = new Huffman(imagenOriginal.getArregloFrecuencia());
         //inciso c
-        codificaH1.aplicarCodificacion(imagenPolicia,h1,imagenPolicia.getNombreImagen()+".bin");
+        codificaH1.aplicarCodificacion(imagenPolicia,h1incisoc,imagenPolicia.getNombreImagen()+".bin");
         System.out.println("Se ha comprimido la imagen traida por el policia (con codigo de imagen original) exitosamente indicando el inciso c)");
         System.out.println("\n -------");
+
 
         //descompresion de las 3 imagenes
         Decodificador decodificaH1 = new Decodificador();

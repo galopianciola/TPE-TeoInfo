@@ -16,13 +16,15 @@ public class Huffman {
     private Nodo arbol;
     //aqui tendre la lista inicial de cada simbolo con su probabilidad
     private ArrayList<Nodo> simbolos = new ArrayList<>();
-    private double[]frecuencias;
+    private double[] frecuencias;
 
-    public Huffman(double[]arregloFrecuencias){
+    public Huffman(double[] arregloFrecuencias){
         this.frecuencias=arregloFrecuencias;
     }
 
-
+    public double[] getFrecuencias() {
+        return frecuencias;
+    }
 
     public double[] getProbabilidades(double[] frecuencias){
         int sumaTotal = 0;
