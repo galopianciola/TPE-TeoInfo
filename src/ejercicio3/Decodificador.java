@@ -146,7 +146,10 @@ public class Decodificador {
     }
 
     public void crearImagenBMP(ImagenWill imagenRecuperada){
-        File outputfile = new File(imagenRecuperada.getNombreImagen()+" recuperada.bmp");
+        String carpetaCreada="ImagenesRecuperadas";
+        File carpeta=new File(carpetaCreada);
+        carpeta.mkdirs();
+        File outputfile = new File("ImagenesRecuperadas/"+imagenRecuperada.getNombreImagen()+" recuperada.bmp");
         try {
             ImageIO.write(imagenRecuperada.getImagen(), "bmp", outputfile);
         } catch (IOException e) {

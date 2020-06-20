@@ -29,7 +29,7 @@ public class Histograma extends ApplicationFrame {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i=0;i<img.getArregloFrecuencia().length;i++) {
 			if (img.getArregloFrecuencia()[i]!=0){
-				dataset.addValue(img.getArregloFrecuencia()[i],"numero de repeticiones",""+(int)(Math.floor(i/16)));
+				dataset.addValue(img.getArregloFrecuencia()[i],"numero de repeticiones",""+(int)(Math.floor(i/img.getCantTonos())));
 			}
 
 		}
@@ -49,7 +49,10 @@ public class Histograma extends ApplicationFrame {
 		);
 
 		try{
-			ChartUtilities.saveChartAsJPEG(new File("histograma de "+nombre+".jpg"), chart, 500, 475);
+			String carpetaCreada="ImagenesHistograma";
+			File carpeta=new File(carpetaCreada);
+			carpeta.mkdirs();
+			ChartUtilities.saveChartAsJPEG(new File("ImagenesHistograma/Histograma de "+nombre+".jpg"), chart, 500, 475);
 		}
 		catch(IOException e){
 			System.out.println("Error al abrir el archivo");

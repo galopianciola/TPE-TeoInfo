@@ -40,13 +40,13 @@ public class Ej3 {
 
         //descompresion de las 3 imagenes
         Decodificador decodificaH1 = new Decodificador();
-        ImagenWill imagenOriginalRecuperada= decodificaH1.restaurarImagen(imagenOriginal.getNombreImagen()+".bin",imagenOriginal.getNombreImagen());
+        ImagenWill imagenOriginalRecuperada= decodificaH1.restaurarImagen("ArchivosBinarios/"+imagenOriginal.getNombreImagen()+".bin",imagenOriginal.getNombreImagen());
         decodificaH1.crearImagenBMP(imagenOriginalRecuperada);
 
-        ImagenWill imagenMasParecidaRecuperada= decodificaH1.restaurarImagen(imagenMasParecida.getNombreImagen()+".bin",imagenMasParecida.getNombreImagen());
+        ImagenWill imagenMasParecidaRecuperada= decodificaH1.restaurarImagen("ArchivosBinarios/"+imagenMasParecida.getNombreImagen()+".bin",imagenMasParecida.getNombreImagen());
         decodificaH1.crearImagenBMP(imagenMasParecidaRecuperada);
 
-        ImagenWill imagenPoliciaRecuperada= decodificaH1.restaurarImagen(imagenPolicia.getNombreImagen()+".bin",imagenPolicia.getNombreImagen());
+        ImagenWill imagenPoliciaRecuperada= decodificaH1.restaurarImagen("ArchivosBinarios/"+imagenPolicia.getNombreImagen()+".bin",imagenPolicia.getNombreImagen());
         decodificaH1.crearImagenBMP(imagenPoliciaRecuperada);
 
 
@@ -60,7 +60,7 @@ public class Ej3 {
         //descompresion inciso d
         Decodificador decodificaH2 = new Decodificador();
 
-        ImagenWill imagenPoliciaRecuperadaH2=decodificaH2.restaurarImagen(imagenPolicia.getNombreImagen()+" - propio codigo.bin",imagenPolicia.getNombreImagen()+" - propio codigo");
+        ImagenWill imagenPoliciaRecuperadaH2=decodificaH2.restaurarImagen("ArchivosBinarios/"+imagenPolicia.getNombreImagen()+" - propio codigo.bin",imagenPolicia.getNombreImagen()+" - propio codigo");
         decodificaH2.crearImagenBMP(imagenPoliciaRecuperadaH2);
     }
 

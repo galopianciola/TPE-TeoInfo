@@ -68,4 +68,13 @@ public class ImagenWill {
 
     public int getCantPixeles(){return cantPixeles;}
 
+    public int getCantTonos () {
+        int suma = 0;
+        for (int i= 0; i< arregloFrecuencia.length; i++){
+            if (arregloFrecuencia[i] != 0)
+                suma++;
+        }
+        return suma;
+    }
+
 }

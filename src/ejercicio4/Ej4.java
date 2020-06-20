@@ -28,12 +28,23 @@ public class Ej4 {
         Canal c8=new Canal(imagenOriginal,this.imagenCanal8);
         Canal c10=new Canal(imagenOriginal,this.imagenCanal10);
 
+        System.out.println("\nCanal 2:");
+        for(double[] row :c2.generarMatrizCondicional()){
+            printRow(row);
+        }
+        System.out.println("\nCanal 8:");
+        for(double[] row :c8.generarMatrizCondicional()){
+            printRow(row);
+        }
+        System.out.println("\nCanal 10:");
+        for(double[] row :c2.generarMatrizCondicional()){
+            printRow(row);
+        }
+        System.out.println("\nRuido del canal 2: "+c2.getRuido());
+        System.out.println("Ruido del canal 8: "+c8.getRuido());
+        System.out.println("Ruido del canal 10: "+c10.getRuido());
 
-        //for(double[] row :c2.getMatrizCondicional()){
-          //  printRow(row);
-        //}
-        c2.getMatrizCondicional();
-        c2.getMatrizConjunta();
+
     }
 
     public static void printRow(double[] row) {

@@ -3,10 +3,7 @@ package ejercicio3;
 import common.ImagenWill;
 
 import java.awt.*;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -105,7 +102,10 @@ public class Codificador {
     //METODO PRINCIPAL
     public void aplicarCodificacion(ImagenWill imagen,Huffman h1, String rutaBin){
         try {
-            FileOutputStream fos= new FileOutputStream(rutaBin); //output.bin
+            String carpetaCreada="ArchivosBinarios";
+            File carpeta=new File(carpetaCreada);
+            carpeta.mkdirs();
+            FileOutputStream fos= new FileOutputStream("ArchivosBinarios/"+rutaBin); //.bin
             DataOutputStream dos = new DataOutputStream(fos); //helper para armar el .bin
             byte[] imagenCodificada=codificarImagen(imagen,h1);
 
