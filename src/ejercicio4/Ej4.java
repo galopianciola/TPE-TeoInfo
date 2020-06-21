@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class Ej4 {
-    ImagenWill imagenCanal2;
-    ImagenWill imagenCanal8;
-    ImagenWill imagenCanal10;
+    private ImagenWill imagenCanal2;
+    private ImagenWill imagenCanal8;
+    private ImagenWill imagenCanal10;
 
     public Ej4(){
         try {
@@ -41,8 +41,11 @@ public class Ej4 {
             printRow(row);
         }
         System.out.println("\nRuido del canal 2: "+c2.getRuido());
+        System.out.println("Ruido analitico del canal 2: " + c2.getRuidoAnalitico());
         System.out.println("Ruido del canal 8: "+c8.getRuido());
+        System.out.println("Ruido analitico del canal 8: " + c8.getRuidoAnalitico());
         System.out.println("Ruido del canal 10: "+c10.getRuido());
+        System.out.println("Ruido analitico del canal 10: " + c10.getRuidoAnalitico());
 
 
     }

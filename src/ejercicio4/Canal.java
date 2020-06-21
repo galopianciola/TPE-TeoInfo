@@ -28,7 +28,7 @@ public class Canal {
 
     public void cargarMatrizConjunta(ImagenWill imgX,ImagenWill imgY){
         //tomo las imagenes por el cual voy a analizar el canal
-        //y obtengo una matriz de frecuencia de coloresa
+        //y obtengo una matriz de frecuencia de colores
         for(int i=0; i < imgX.getImagen().getWidth(); i++){
             for(int j=0; j < imgX.getImagen().getHeight(); j++){
 
@@ -37,8 +37,8 @@ public class Canal {
 
                 Color colorPixelY = new Color(imgY.getImagen().getRGB(i, j));
                 int valorPixelY = colorPixelY.getRed();
-                //se dividen por la cantidad de colores que tiene las imagenesla   s
 
+                //se dividen por la cantidad de colores que tienen las imagenes
                 int columna = (int)(Math.floor(valorPixelX/this.tamanioX));
                 int fila = (int)(Math.floor(valorPixelY/this.tamanioY));
                 this.matrizConjunta[columna][fila] ++;
@@ -71,7 +71,7 @@ public class Canal {
             double sumaColumna = this.getTotalColumna(columnaActual);
             for (int filaActual = 0; filaActual < tamanioY; filaActual++) {
                 if (matrizConjunta[columnaActual][filaActual] != 0) {
-                    ret[columnaActual][filaActual] = matrizConjunta[columnaActual][filaActual]/ sumaColumna;
+                    ret[columnaActual][filaActual] = matrizConjunta[columnaActual][filaActual]/ sumaColumna; //bayes
                 }
             }
         }
@@ -105,6 +105,23 @@ public class Canal {
             }
         }
         return ruidoActual;
+    }
+
+    public double getRuidoAnalitico(){
+        double out = 0;
+        for (int columnaActual = 0; columnaActual < this.tamanioX; columnaActual++){
+            double sumaColumna = this.getTotalColumna(columnaActual); //sumaColumna = marginal de X
+
+            double aux = 0;
+            for (int filaActual = 0; filaActual < this.tamanioY; filaActual++){
+                double probYdadoX = this.generarMatrizCondicional()[columnaActual][filaActual];
+                if (probYdadoX > 0) {
+                    aux += probYdadoX * (Math.log10(probYdadoX) / Math.log10(2));
+                }
+            }
+            out += sumaColumna * (-aux);
+        }
+        return out;
     }
 
     public double [] getProbAcumuladaX(){
