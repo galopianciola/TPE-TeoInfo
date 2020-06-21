@@ -97,9 +97,11 @@ public class Canal {
             ruidoAnt=ruidoActual;
             ruidoActual=0;
             for (int i =0; i < this.tamanioX; i++) {
+                double probMarginalX = probX[i]/muestras;
                 for (int j =0; j < this.tamanioY; j++) {
                     if (matConj[j][i]>0) {
-                        ruidoActual-= (matConj[j][i]/muestras)*(Math.log10((matConj[j][i]/muestras)/(probX[i]/muestras))/Math.log10(2));
+                        double probYdadoX = (matConj[j][i]/muestras)/probMarginalX;
+                        ruidoActual += probMarginalX * (- probYdadoX * (Math.log10(probYdadoX)/Math.log10(2)));
                     }
                 }
             }
