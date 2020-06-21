@@ -86,14 +86,14 @@ public class Canal {
         double ruidoAnt = -1;
         double ruidoActual =0;
         int muestras =0;
-        int simbolo;
-        int sig;
+        int entrada;
+        int salida;
         while (!converge(ruidoAnt, ruidoActual) || muestras < 100000) {
             muestras++;
-            simbolo=this.generarEntrada();
-            sig = this.sig_dado_ant(simbolo,matrizCondicional);
-            probX[simbolo]++;
-            matConj[sig][simbolo]++;
+            entrada=this.generarEntrada();
+            salida = this.sig_dado_ant(entrada,matrizCondicional);
+            probX[entrada]++;
+            matConj[salida][entrada]++;
             ruidoAnt=ruidoActual;
             ruidoActual=0;
             for (int i =0; i < this.tamanioX; i++) {
