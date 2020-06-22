@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Canal {
 
-    static final double MINVALORMUESTRAS=100;
+    static final double MINVALORMUESTRAS=1000;
     private double epsilon = 1e-4;
     private int tamanioX;
     private int tamanioY;
@@ -182,8 +182,8 @@ public class Canal {
         return ((Math.abs(actual-anterior)) <epsilon);
     }
 
-    public void generarGrafico(String nombre,String titulo){
-        Grafico grafico=new Grafico(nombre,titulo,this.muestraGrafico,epsilon);
+    public void generarGrafico(String nombre){
+        Grafico grafico=new Grafico(nombre,this.muestraGrafico);
     }
 
 }
