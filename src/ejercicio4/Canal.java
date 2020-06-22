@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Canal {
 
-    static final double MINVALORMUESTRAS=1000;
+    static final double MINVALORMUESTRAS=100;
     private double epsilon = 1e-4;
     private int tamanioX;
     private int tamanioY;
@@ -89,7 +89,6 @@ public class Canal {
         int muestras =0;
         int entrada;
         int salida;
-        this.
         muestraGrafico=new ArrayList<>();
         while (!converge(ruidoAnt, ruidoActual) || muestras < MINVALORMUESTRAS) {
             entrada = this.generarEntrada();

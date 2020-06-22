@@ -3,9 +3,13 @@ package ejercicio4;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.LogAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.util.LogFormat;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYDataset;
@@ -21,18 +25,24 @@ import java.util.ArrayList;
 public class Grafico extends ApplicationFrame {
     public Grafico(String nombre , String titulo, ArrayList<Double> muestra ,double epsilon) {
         super(nombre);
-        JFreeChart lineChart = ChartFactory.createXYLineChart(
-                titulo,
-                "Numero Muestra","Error",
-                createDataset(muestra,epsilon),
-                PlotOrientation.VERTICAL,
-                true,true,false);
+        LogAxis yAxis = new LogAxis("");
+        yAxis.setBase(10);
+        LogFormat format = new LogFormat(yAxis.getBase(), "", "", true);
+        yAxis.setNumberFormatOverride(format);
+        XYPlot plot = new XYPlot(
+                new XYSeriesCollection(createDataset(muestra, epsilon)),
+                new NumberAxis(),
+                yAxis,
+                new XYLineAndShapeRenderer(true, false));
+        JFreeChart lineChart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
 
         String carpetaCreada="ImagenesGraficos";
         File carpeta=new File(carpetaCreada);
         carpeta.mkdirs();
         int width = 1300;
         int height = 760;
+
+
 
         File outFile = new File( "ImagenesGraficos/"+nombre+".jpeg" );
         try {
@@ -42,18 +52,13 @@ public class Grafico extends ApplicationFrame {
         }
     }
 
-    private XYDataset createDataset(ArrayList<Double>muestra,double epsilon) {
+    private XYSeries createDataset(ArrayList<Double>muestra,double epsilon) {
         XYSeries datasetConvergencia = new XYSeries("Convergencia");
-        XYSeries datasetError = new XYSeries("Error");
         for (int i=0;i<muestra.size();i++){
-            if((i%10==0)&&(muestra.get(i)<0.5)&&(muestra.get(i)>-0.5)) {
-                datasetConvergencia.add(i,(double)muestra.get(i));
-                datasetError.add(i,epsilon);
-            }
+            datasetConvergencia.add(i,(double)muestra.get(i));
         }
         XYSeriesCollection dataset=new XYSeriesCollection();
-        dataset.addSeries(datasetConvergencia);
-        dataset.addSeries(datasetError);
-        return dataset;
+
+        return datasetConvergencia;
     }
 }
