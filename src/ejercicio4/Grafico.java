@@ -46,9 +46,10 @@ public class Grafico extends ApplicationFrame {
         XYSeries datasetConvergencia = new XYSeries("Convergencia");
         XYSeries datasetError = new XYSeries("Error");
         for (int i=0;i<muestra.size();i++){
+            if((i%10==0)&&(muestra.get(i)<0.5)&&(muestra.get(i)>-0.5)) {
                 datasetConvergencia.add(i,(double)muestra.get(i));
                 datasetError.add(i,epsilon);
-
+            }
         }
         XYSeriesCollection dataset=new XYSeriesCollection();
         dataset.addSeries(datasetConvergencia);
