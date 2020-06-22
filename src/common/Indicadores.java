@@ -31,7 +31,7 @@ public class Indicadores {
             }
         }
 
-        return (float) sumador/n;
+        return sumador/n;
     }
 
     public float calcularDesvio(BufferedImage img){

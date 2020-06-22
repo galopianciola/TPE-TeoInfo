@@ -1,9 +1,5 @@
 package ejercicio3;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 public class Header {
     private int alto;
     private int ancho;

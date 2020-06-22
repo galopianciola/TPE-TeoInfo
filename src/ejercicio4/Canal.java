@@ -1,20 +1,22 @@
 package ejercicio4;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import common.ImagenWill;
 
 import java.awt.*;
-import java.util.Random;
+import java.util.ArrayList;
+
 
 public class Canal {
 
-    static final double EPSILON = 0.1;
+    static final double MAXVALORMUESTRAS=100000;
+    static final double EPSILON = 1e-4;
     private int tamanioX;
     private int tamanioY;
     private double[][] matrizConjunta;
     private int ancho;
     private int alto;
-
+    private ArrayList<Double> muestraGrafico;
 
 
     public Canal(ImagenWill imgX, ImagenWill imgY) {
@@ -55,7 +57,6 @@ public class Canal {
 
 
     public double getTotalColumna(int columna){
-
         double suma = 0;
         for(int fila = 0; fila < tamanioY; fila++) {
              suma += matrizConjunta[columna][fila];
@@ -81,30 +82,32 @@ public class Canal {
 
     public double getRuido(){
         double [][]matrizCondicional=generarMatrizCondicional();
-        double [][] matConj=new double[tamanioX][tamanioY];
-        double [] probX=new double[tamanioX];
+        double [][] matrizConjuntaMuestreo=new double[tamanioX][tamanioY];
+        double [] probabilidadX=new double[tamanioX];
         double ruidoAnt = -1;
         double ruidoActual =0;
         int muestras =0;
         int entrada;
         int salida;
+        muestraGrafico=new ArrayList<>();
         while (!converge(ruidoAnt, ruidoActual) || muestras < 100000) {
-            muestras++;
-            entrada=this.generarEntrada();
+            entrada = this.generarEntrada();
             salida = this.sig_dado_ant(entrada,matrizCondicional);
-            probX[entrada]++;
-            matConj[salida][entrada]++;
+            matrizConjuntaMuestreo[salida][entrada]++;
+            probabilidadX[entrada]++;
             ruidoAnt=ruidoActual;
+            muestras++;
             ruidoActual=0;
             for (int i =0; i < this.tamanioX; i++) {
-                double probMarginalX = probX[i]/muestras;
+                double probMarginalX = probabilidadX[i]/muestras;
                 for (int j =0; j < this.tamanioY; j++) {
-                    if (matConj[j][i]>0) {
-                        double probYdadoX = (matConj[j][i]/muestras)/probMarginalX;
+                    if (matrizConjuntaMuestreo[j][i]>0) {
+                        double probYdadoX = (matrizConjuntaMuestreo[j][i]/muestras)/probMarginalX;
                         ruidoActual += probMarginalX * (- probYdadoX * (Math.log10(probYdadoX)/Math.log10(2)));
                     }
                 }
             }
+
         }
         return ruidoActual;
     }
@@ -129,11 +132,11 @@ public class Canal {
     public double [] getProbAcumuladaX(){
         double [] ret = new double[tamanioX];
         double suma=0;
-        for (int c = 0; c <tamanioX; c++){
-            for (int f= 0; f< tamanioY ; f++){
-                suma += this.matrizConjunta[c][f];
+        for (int i = 0; i <tamanioX;i++){
+            for (int j= 0; j< tamanioY ; j++){
+                suma += this.matrizConjunta[i][j];
             }
-            ret[c] = suma;
+            ret[i] = suma;
         }
         return ret;
     }
@@ -141,11 +144,11 @@ public class Canal {
     public double [][] getMatrizProbAcumulada(double [][] matrizCondicional){
         double [][]ret=new double[tamanioX][tamanioY];
         double suma;
-        for (int c=0;c<tamanioX;c++){
+        for (int i=0;i<tamanioX;i++){
             suma=0;
-            for(int f=0;f<tamanioY;f++){
-                suma +=matrizCondicional[c][f];
-                ret[c][f]=suma;
+            for(int j=0;j<tamanioY;j++){
+                suma +=matrizCondicional[i][j];
+                ret[i][j]=suma;
             }
         }
         return ret;
@@ -174,11 +177,14 @@ public class Canal {
     }
 
 
-    public boolean converge(double actual, double anterior){
+    public boolean converge(double anterior, double actual){
+        muestraGrafico.add(actual-anterior);
         return ((Math.abs(actual-anterior)) <EPSILON);
     }
 
-
+    public void generarGrafico(String nombre,String titulo){
+        Grafico grafico=new Grafico(nombre,titulo,this.muestraGrafico);
+    }
 
 }
 

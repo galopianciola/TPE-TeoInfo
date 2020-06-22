@@ -2,7 +2,6 @@ package ejercicio1;
 
 import common.Indicadores;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class FactorCorrelacionCruzada {

@@ -81,18 +81,6 @@ public class Codificador {
     }
 
 
-    public void imprimirCodigo(){
-        //obtengo todas las claves del hash
-        Enumeration claves = this.codigo.keys();
-
-        //obtengo todos los valores del hash
-        Enumeration valores = this.codigo.elements();
-
-        while (claves.hasMoreElements()){
-            System.out.println(claves.nextElement().toString() + ": " + valores.nextElement().toString());
-        }
-    }
-
     public byte[] codificarImagen (ImagenWill imagen,Huffman h1){
         ArrayList<Byte> lis = codificarEnLista(imagen,h1);
         return convertirAPrimitivo(lis);

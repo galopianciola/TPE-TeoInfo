@@ -7,10 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+
 public class Ej4 {
     private ImagenWill imagenCanal2;
     private ImagenWill imagenCanal8;
     private ImagenWill imagenCanal10;
+
 
     public Ej4(){
         try {
@@ -40,12 +42,16 @@ public class Ej4 {
         for(double[] row :c2.generarMatrizCondicional()){
             printRow(row);
         }
+        System.out.println("\n---------------------");
+
         System.out.println("\nRuido del canal 2: "+c2.getRuido());
         System.out.println("Ruido analitico del canal 2: " + c2.getRuidoAnalitico());
+        c2.generarGrafico("Grafico de canal 2","Canal 2");
         System.out.println("Ruido del canal 8: "+c8.getRuido());
         System.out.println("Ruido analitico del canal 8: " + c8.getRuidoAnalitico());
         System.out.println("Ruido del canal 10: "+c10.getRuido());
         System.out.println("Ruido analitico del canal 10: " + c10.getRuidoAnalitico());
+
 
 
     }

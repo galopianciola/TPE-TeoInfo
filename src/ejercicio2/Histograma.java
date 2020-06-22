@@ -16,7 +16,6 @@ import org.jfree.ui.ApplicationFrame;
 import javax.swing.*;
 
 public class Histograma extends ApplicationFrame {
-	public static int CANTCOLOR=256;
 
 	public Histograma(String title,ImagenWill img) {
 		super(title);
@@ -49,10 +48,10 @@ public class Histograma extends ApplicationFrame {
 		);
 
 		try{
-			String carpetaCreada="ImagenesHistograma";
+			String carpetaCreada="ImagenesGraficos";
 			File carpeta=new File(carpetaCreada);
 			carpeta.mkdirs();
-			ChartUtilities.saveChartAsJPEG(new File("ImagenesHistograma/Histograma de "+nombre+".jpg"), chart, 500, 475);
+			ChartUtilities.saveChartAsJPEG(new File("ImagenesGraficos/Histograma de "+nombre+".jpeg"), chart, 500, 475);
 		}
 		catch(IOException e){
 			System.out.println("Error al abrir el archivo");

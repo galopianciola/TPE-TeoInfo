@@ -1,14 +1,8 @@
 package ejercicio3;
 
-import common.ImagenWill;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class Huffman {

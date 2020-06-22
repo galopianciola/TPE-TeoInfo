@@ -13,9 +13,7 @@ public class Ej2 {
         Histograma hImagenOriginal = new Histograma("Histograma imagen original",imagenOriginal);
         Histograma hImagenMasParecida=new Histograma("Histograma imagen mas parecida",imagenMasParecida);
         Histograma hImagenPolicia=new Histograma("Histograma imagen del policia",imagenPolicia);
-        //h.pack();
-        //h.setVisible(true);
-        //visualizacion del histograma
+
 
         System.out.println("\n---------------------");
         System.out.println("Ejercicio 2\n");
