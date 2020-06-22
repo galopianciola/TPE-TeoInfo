@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class Canal {
 
-    static final double MAXVALORMUESTRAS=100000;
-    static final double EPSILON = 1e-4;
+    static final double MINVALORMUESTRAS=1000;
+    private double epsilon = 1e-4;
     private int tamanioX;
     private int tamanioY;
     private double[][] matrizConjunta;
@@ -80,7 +80,7 @@ public class Canal {
     }
 
 
-    public double getRuido(){
+    public double getRuido(double valor){
         double [][]matrizCondicional=generarMatrizCondicional();
         double [][] matrizConjuntaMuestreo=new double[tamanioX][tamanioY];
         double [] probabilidadX=new double[tamanioX];
@@ -89,8 +89,9 @@ public class Canal {
         int muestras =0;
         int entrada;
         int salida;
+        this.
         muestraGrafico=new ArrayList<>();
-        while (!converge(ruidoAnt, ruidoActual) || muestras < 100000) {
+        while (!converge(ruidoAnt, ruidoActual) || muestras < MINVALORMUESTRAS) {
             entrada = this.generarEntrada();
             salida = this.sig_dado_ant(entrada,matrizCondicional);
             matrizConjuntaMuestreo[salida][entrada]++;
@@ -179,11 +180,11 @@ public class Canal {
 
     public boolean converge(double anterior, double actual){
         muestraGrafico.add(actual-anterior);
-        return ((Math.abs(actual-anterior)) <EPSILON);
+        return ((Math.abs(actual-anterior)) <epsilon);
     }
 
     public void generarGrafico(String nombre,String titulo){
-        Grafico grafico=new Grafico(nombre,titulo,this.muestraGrafico);
+        Grafico grafico=new Grafico(nombre,titulo,this.muestraGrafico,epsilon);
     }
 
 }

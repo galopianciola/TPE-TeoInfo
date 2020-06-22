@@ -44,12 +44,14 @@ public class Ej4 {
         }
         System.out.println("\n---------------------");
 
-        System.out.println("\nRuido del canal 2: "+c2.getRuido());
+        System.out.println("\nRuido del canal 2: "+c2.getRuido(1e-4));
         System.out.println("Ruido analitico del canal 2: " + c2.getRuidoAnalitico());
         c2.generarGrafico("Grafico de canal 2","Canal 2");
-        System.out.println("Ruido del canal 8: "+c8.getRuido());
+        c2.getRuido(0.1);
+        c2.generarGrafico("Grafico del canal 2 con error mayor","Canal 2 error mayor");
+        System.out.println("Ruido del canal 8: "+c8.getRuido(1e-4));
         System.out.println("Ruido analitico del canal 8: " + c8.getRuidoAnalitico());
-        System.out.println("Ruido del canal 10: "+c10.getRuido());
+        System.out.println("Ruido del canal 10: "+c10.getRuido(1e-4));
         System.out.println("Ruido analitico del canal 10: " + c10.getRuidoAnalitico());
 
 

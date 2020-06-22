@@ -4,21 +4,27 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Grafico extends ApplicationFrame {
-    public Grafico(String nombre , String titulo, ArrayList<Double> muestra ) {
+    public Grafico(String nombre , String titulo, ArrayList<Double> muestra ,double epsilon) {
         super(nombre);
-        JFreeChart lineChart = ChartFactory.createLineChart(
+        JFreeChart lineChart = ChartFactory.createXYLineChart(
                 titulo,
                 "Numero Muestra","Error",
-                createDataset(muestra),
+                createDataset(muestra,epsilon),
                 PlotOrientation.VERTICAL,
                 true,true,false);
 
@@ -27,6 +33,7 @@ public class Grafico extends ApplicationFrame {
         carpeta.mkdirs();
         int width = 1300;
         int height = 760;
+
         File outFile = new File( "ImagenesGraficos/"+nombre+".jpeg" );
         try {
             ChartUtilities.saveChartAsJPEG(outFile ,lineChart, width ,height);
@@ -35,13 +42,17 @@ public class Grafico extends ApplicationFrame {
         }
     }
 
-    private CategoryDataset createDataset(ArrayList<Double>muestra) {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+    private XYDataset createDataset(ArrayList<Double>muestra,double epsilon) {
+        XYSeries datasetConvergencia = new XYSeries("Convergencia");
+        XYSeries datasetError = new XYSeries("Error");
         for (int i=0;i<muestra.size();i++){
-            if((i%5000==0)&&(muestra.get(i)<1e-2)&&(muestra.get(i)>-1e-2)) {
-                dataset.addValue(muestra.get(i), "Error", "" + i);
-            }
+                datasetConvergencia.add(i,(double)muestra.get(i));
+                datasetError.add(i,epsilon);
+
         }
+        XYSeriesCollection dataset=new XYSeriesCollection();
+        dataset.addSeries(datasetConvergencia);
+        dataset.addSeries(datasetError);
         return dataset;
     }
 }
