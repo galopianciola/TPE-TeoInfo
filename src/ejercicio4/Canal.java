@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class Canal {
 
-    static final double MINVALORMUESTRAS=1000;
-    private double epsilon = 1e-4;
+    private static final double MINVALORMUESTRAS=1000;
+    private static final double epsilon = 1e-4;
     private int tamanioX;
     private int tamanioY;
     private double[][] matrizConjunta;
@@ -80,7 +80,7 @@ public class Canal {
     }
 
 
-    public double getRuido(double valor){
+    public double getRuido(){
         double [][]matrizCondicional=generarMatrizCondicional();
         double [][] matrizConjuntaMuestreo=new double[tamanioY][tamanioX];
         double [] probabilidadX=new double[tamanioX];
