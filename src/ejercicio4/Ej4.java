@@ -34,14 +34,17 @@ public class Ej4 {
         for(double[] row :c2.generarMatrizCondicional()){
             printRow(row);
         }
+
         System.out.println("\nCanal 8:");
         for(double[] row :c8.generarMatrizCondicional()){
             printRow(row);
         }
+
         System.out.println("\nCanal 10:");
-        for(double[] row :c2.generarMatrizCondicional()){
+        for(double[] row :c10.generarMatrizCondicional()){
             printRow(row);
         }
+
         System.out.println("\n---------------------");
 
         System.out.println("\nRuido del canal 2: "+c2.getRuido(1e-4));

@@ -43,7 +43,7 @@ public class Canal {
                 //se dividen por la cantidad de colores que tienen las imagenes
                 int columna = (int)(Math.floor(valorPixelX/this.tamanioX));
                 int fila = (int)(Math.floor(valorPixelY/this.tamanioY));
-                this.matrizConjunta[columna][fila] ++;
+                this.matrizConjunta[fila][columna] ++;
             }
         }
         //luego a la matriz de frecuencias las divido por el total de pixeles
@@ -59,20 +59,20 @@ public class Canal {
     public double getTotalColumna(int columna){
         double suma = 0;
         for(int fila = 0; fila < tamanioY; fila++) {
-             suma += matrizConjunta[columna][fila];
+             suma += matrizConjunta[fila][columna];
         }
         return suma;
     }
 
     //este metodo genera la matriz condicional Canal(Y/X) a partir de la matriz conjunta
     public double [] [] generarMatrizCondicional() {
-        double [][] ret = new double[tamanioX][tamanioY];
+        double [][] ret = new double[tamanioY][tamanioX];
         for (int columnaActual = 0; columnaActual < tamanioX; columnaActual++) {
             //sumaColumna= marginal de X
             double sumaColumna = this.getTotalColumna(columnaActual);
             for (int filaActual = 0; filaActual < tamanioY; filaActual++) {
-                if (matrizConjunta[columnaActual][filaActual] != 0) {
-                    ret[columnaActual][filaActual] = matrizConjunta[columnaActual][filaActual]/ sumaColumna; //bayes
+                if (matrizConjunta[filaActual][columnaActual] != 0) {
+                    ret[filaActual][columnaActual] = matrizConjunta[filaActual][columnaActual]/ sumaColumna; //bayes
                 }
             }
         }
@@ -82,7 +82,7 @@ public class Canal {
 
     public double getRuido(double valor){
         double [][]matrizCondicional=generarMatrizCondicional();
-        double [][] matrizConjuntaMuestreo=new double[tamanioX][tamanioY];
+        double [][] matrizConjuntaMuestreo=new double[tamanioY][tamanioX];
         double [] probabilidadX=new double[tamanioX];
         double ruidoAnt = -1;
         double ruidoActual =0;
@@ -119,7 +119,7 @@ public class Canal {
 
             double aux = 0;
             for (int filaActual = 0; filaActual < this.tamanioY; filaActual++){
-                double probYdadoX = this.generarMatrizCondicional()[columnaActual][filaActual];
+                double probYdadoX = this.generarMatrizCondicional()[filaActual][columnaActual];
                 if (probYdadoX > 0) {
                     aux += probYdadoX * (Math.log10(probYdadoX) / Math.log10(2));
                 }
@@ -134,7 +134,7 @@ public class Canal {
         double suma=0;
         for (int i = 0; i <tamanioX;i++){
             for (int j= 0; j< tamanioY ; j++){
-                suma += this.matrizConjunta[i][j];
+                suma += this.matrizConjunta[j][i];
             }
             ret[i] = suma;
         }
@@ -147,8 +147,8 @@ public class Canal {
         for (int i=0;i<tamanioX;i++){
             suma=0;
             for(int j=0;j<tamanioY;j++){
-                suma +=matrizCondicional[i][j];
-                ret[i][j]=suma;
+                suma +=matrizCondicional[j][i];
+                ret[j][i]=suma;
             }
         }
         return ret;
@@ -169,7 +169,7 @@ public class Canal {
         for (int i = 0; i < tamanioY; i++) {
             // busco en la columna dado el anterior
             // el q coincida con la prob randomeada
-            if (r < getMatrizProbAcumulada(matrizCondicional)[s_ant][i]) {
+            if (r < getMatrizProbAcumulada(matrizCondicional)[i][s_ant]) {
                 return i;
             }
         }
