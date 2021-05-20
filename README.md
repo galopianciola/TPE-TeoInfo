@@ -1,4 +1,4 @@
-# Teoria de la Informacion
+# Teoría de la Información
 ## Trabajo Práctico Especial
 
 >En este informe, se encuentran datos, análisis y conclusiones sobre el estudio sobre varias imágenes, teniendo en cuenta una serie de específicas consultas acerca de estas, relacionándose entre sí. El trabajo nos acerca, a grandes rasgos, a la rama de **procesamiento de imágenes**.
