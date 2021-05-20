@@ -1,7 +1,7 @@
 # Teoria de la Informacion
 ## Trabajo Práctico Especial
 
->En este informe, se encuentran datos, análisis y conclusiones sobre el estudio sobre varias imágenes, teniendo en cuenta una serie de específicas consultas acerca >de estas, relacionándose entre sí. El trabajo nos acerca, a grandes rasgos, a la rama de **procesamiento de imágenes**.
+>En este informe, se encuentran datos, análisis y conclusiones sobre el estudio sobre varias imágenes, teniendo en cuenta una serie de específicas consultas acerca de estas, relacionándose entre sí. El trabajo nos acerca, a grandes rasgos, a la rama de **procesamiento de imágenes**.
 
 Luego de la desaparición de un niño llamado Will, en Hawkins, su madre llevó a la estación de policía una imagen suya  para que sea buscado. A partir de esto, surgió la necesidad de utilizar dicha imagen para compararla con imágenes de otros niños, y asi, poder dar con Will.
 
